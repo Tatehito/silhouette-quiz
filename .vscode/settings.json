@@ -1,8 +1,4 @@
 {
-    "editor.codeActionsOnSave":
-        { "source.fixAll.eslint": true
-    },
-    "editor.formatOnSave": false,
-    "eslint.packageManager": "yarn",
-    "typescript.tsdk": "./node_modules/typescript/lib",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
 }

@@ -1,31 +1,33 @@
-import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import db from './firebase'
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import 'react-native-gesture-handler'
+import { StatusBar } from 'expo-status-bar'
+import React from 'react'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-import useCachedResources from './src/hooks/useCachedResources';
-import useColorScheme from './src/hooks/useColorScheme';
-import Navigation from './src/navigation';
+import db from './firebase'
+import useCachedResources from './src/hooks/useCachedResources'
+import useColorScheme from './src/hooks/useColorScheme'
+import Navigation from './src/navigation'
 
 export default function App() {
-  db.collection("tasks").get().then((querySnapshot) => {
-    querySnapshot.forEach((task) => {
+  db.collection('tasks')
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((task) => {
         console.log(`${task.id} => ${task.data().name}`)
+      })
     })
-  })
 
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
+  const isLoadingComplete = useCachedResources()
+  const colorScheme = useColorScheme()
 
   if (!isLoadingComplete) {
-    return null;
+    return null
   } else {
     return (
       <SafeAreaProvider>
         <Navigation colorScheme={colorScheme} />
         <StatusBar />
       </SafeAreaProvider>
-    );
+    )
   }
 }
