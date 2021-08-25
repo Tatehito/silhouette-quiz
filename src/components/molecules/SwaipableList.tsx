@@ -8,7 +8,7 @@ export default function SwaipableList(props) {
     <TouchableHighlight style={styles.rowFront} underlayColor="#AAA">
       <View style={{ flexDirection: 'row' }}>
         <Checkbox value="" />
-        <Text style={styles.text}>{data.item.text}</Text>
+        <Text style={styles.text}>{data.item.name}</Text>
       </View>
     </TouchableHighlight>
   )

@@ -3,26 +3,17 @@ import { Input, IconButton, VStack, Icon, Center, NativeBaseProvider } from 'nat
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
+import Task from '../../entity/Task'
 import SwapableList from '../molecules/SwaipableList'
 
 export default () => {
-  type TaskList = {
-    key: string
-    text: string
-  }
-
-  const [list, setList] = useState<TaskList[]>([])
+  const [list, setList] = useState<Task[]>(Task.findAll())
   const [inputValue, setInputValue] = useState('')
 
   const addItem = (title: string) => {
-    const index = list.length + 1
-    setList([
-      ...list,
-      {
-        key: `${index}`,
-        text: title,
-      },
-    ])
+    const newTask = new Task('', title)
+    setList([...list, newTask])
+    newTask.create()
   }
 
   const renderHiddenItem = (data, rowMap) => (
@@ -36,7 +27,7 @@ export default () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.backRightBtn, styles.backRightBtnRight]}
-        onPress={() => deleteRow(rowMap, data.item.key)}
+        onPress={() => deleteRow(rowMap, data.item)}
       >
         <Text style={styles.backTextWhite}>Delete</Text>
       </TouchableOpacity>
@@ -49,12 +40,10 @@ export default () => {
     }
   }
 
-  const deleteRow = (rowMap, rowKey) => {
-    closeRow(rowMap, rowKey)
-    const newData = [...list]
-    const prevIndex = list.findIndex((item) => item.key === rowKey)
-    newData.splice(prevIndex, 1)
-    setList(newData)
+  const deleteRow = (rowMap, task: Task) => {
+    closeRow(rowMap, task.key)
+    setList(list.filter((t) => t !== task))
+    task.delete()
   }
 
   const onRowDidOpen = (rowKey) => {
