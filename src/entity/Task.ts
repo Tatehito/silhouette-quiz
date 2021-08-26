@@ -9,19 +9,21 @@ class Task {
     this.name = name
   }
 
-  static findAll(): Task[] {
-    const tasks: Task[] = []
-
-    db.collection('tasks')
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((task) => {
-          const data = task.data()
-          tasks.push(new Task(task.id, data.name))
+  static async getAll(): Promise<Task[]> {
+    return new Promise((resolve, reject) => {
+      db.collection('tasks')
+        .get()
+        .then((querySnapshot) => {
+          const tasks: Task[] = []
+          querySnapshot.forEach((doc) => {
+            tasks.push(new Task(doc.id, doc.data().name))
+          })
+          resolve(tasks)
         })
-      })
-
-    return tasks
+        .catch((error) => {
+          reject(error)
+        })
+    })
   }
 
   create(): void {

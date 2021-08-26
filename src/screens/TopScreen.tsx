@@ -1,6 +1,6 @@
 import { FontAwesome5, AntDesign } from '@expo/vector-icons'
 import { Input, Checkbox, IconButton, VStack, Icon, Center, NativeBaseProvider, Box, Fab, Modal } from 'native-base'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import { SwipeListView } from 'react-native-swipe-list-view'
 
@@ -8,8 +8,18 @@ import Task from '../entity/Task'
 
 export default function () {
   const [showModal, setShowModal] = useState(false)
-  const [list, setList] = useState<Task[]>(Task.findAll())
+  const [list, setList] = useState<Task[]>()
   const [inputValue, setInputValue] = useState('')
+
+  useEffect(() => {
+    Task.getAll()
+      .then((tasks) => {
+        setList(tasks)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }, [])
 
   const addItem = (title: string) => {
     const newTask = new Task('', title)
