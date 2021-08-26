@@ -1,17 +1,5 @@
 import { FontAwesome5, AntDesign } from '@expo/vector-icons'
-import {
-  Button,
-  Input,
-  Checkbox,
-  IconButton,
-  VStack,
-  Icon,
-  Center,
-  NativeBaseProvider,
-  Box,
-  Fab,
-  Modal,
-} from 'native-base'
+import { Input, Checkbox, IconButton, VStack, Icon, Center, NativeBaseProvider, Box, Fab, Modal } from 'native-base'
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import { SwipeListView } from 'react-native-swipe-list-view'
@@ -27,6 +15,14 @@ export default function () {
     const newTask = new Task('', title)
     setList([...list, newTask])
     newTask.create()
+  }
+
+  const handleAddTaskButton = () => {
+    if (inputValue) {
+      addItem(inputValue)
+      setInputValue('')
+      setShowModal(false)
+    }
   }
 
   const renderHiddenItem = (data, rowMap) => (
@@ -76,24 +72,6 @@ export default function () {
     <NativeBaseProvider>
       <Center flex={1}>
         <VStack space={4} flex={1} w="90%" mt={4}>
-          <Input
-            variant="filled"
-            InputRightElement={
-              <IconButton
-                icon={<Icon as={FontAwesome5} name="plus" size={4} />}
-                colorScheme="emerald"
-                ml={1}
-                onPress={() => {
-                  addItem(inputValue)
-                  setInputValue('')
-                }}
-                mr={1}
-              />
-            }
-            onChangeText={(v) => setInputValue(v)}
-            value={inputValue}
-            placeholder="Add Item"
-          />
           <VStack>
             <View>
               <SwipeListView
@@ -127,22 +105,26 @@ export default function () {
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Modal.Content maxWidth="400px">
             <Modal.CloseButton />
-            <Modal.Header>Modal Title</Modal.Header>
+            <Modal.Header>タスクを追加する</Modal.Header>
             <Modal.Body>
-              eiusmod sunt ex incididunt cillum quis. Velit duis sit officia eiusmod Lorem aliqua enim
+              <Input
+                variant="filled"
+                InputRightElement={
+                  <IconButton
+                    icon={<Icon as={FontAwesome5} name="plus" size={4} />}
+                    colorScheme="emerald"
+                    ml={1}
+                    onPress={() => {
+                      handleAddTaskButton()
+                    }}
+                    mr={1}
+                  />
+                }
+                onChangeText={(v) => setInputValue(v)}
+                value={inputValue}
+                placeholder="Add Item"
+              />
             </Modal.Body>
-            <Modal.Footer>
-              <Button.Group variant="ghost" space={2}>
-                <Button>LEARN MORE</Button>
-                <Button
-                  onPress={() => {
-                    setShowModal(false)
-                  }}
-                >
-                  ACCEPT
-                </Button>
-              </Button.Group>
-            </Modal.Footer>
           </Modal.Content>
         </Modal>
       </Center>
