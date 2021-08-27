@@ -1,15 +1,34 @@
 import { FontAwesome5, AntDesign } from '@expo/vector-icons'
-import { Input, Checkbox, IconButton, VStack, Icon, Center, NativeBaseProvider, Box, Fab, Modal } from 'native-base'
+import {
+  Input,
+  Checkbox,
+  IconButton,
+  VStack,
+  Icon,
+  Center,
+  NativeBaseProvider,
+  Box,
+  Fab,
+  Modal,
+  Select,
+  CheckIcon,
+} from 'native-base'
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import { SwipeListView } from 'react-native-swipe-list-view'
 
 import Task from '../entity/Task'
+import useAllCategories from '../hooks/useAllCategories'
 
 export default function () {
   const [showModal, setShowModal] = useState(false)
   const [list, setList] = useState<Task[]>()
   const [inputValue, setInputValue] = useState('')
+  const [category, setCategory] = useState('')
+
+  const allCategories = useAllCategories()
+
+  const categoryOptions = allCategories.map((category) => <Select.Item label={category.name} value={category.id} />)
 
   useEffect(() => {
     Task.getAll()
@@ -122,7 +141,6 @@ export default function () {
                 InputRightElement={
                   <IconButton
                     icon={<Icon as={FontAwesome5} name="plus" size={4} />}
-                    colorScheme="emerald"
                     ml={1}
                     onPress={() => {
                       handleAddTaskButton()
@@ -134,6 +152,20 @@ export default function () {
                 value={inputValue}
                 placeholder="Add Item"
               />
+              <Select
+                selectedValue={category}
+                minWidth={200}
+                accessibilityLabel="Select your favorite programming language"
+                placeholder="カテゴリ"
+                onValueChange={(itemValue) => setCategory(itemValue)}
+                _selectedItem={{
+                  bg: 'cyan.600',
+                  endIcon: <CheckIcon size={4} />,
+                }}
+              >
+                <Select.Item label="" value="" />
+                {categoryOptions}
+              </Select>
             </Modal.Body>
           </Modal.Content>
         </Modal>
