@@ -24,7 +24,7 @@ export default function () {
   const [showModal, setShowModal] = useState(false)
   const [list, setList] = useState<Task[]>()
   const [inputValue, setInputValue] = useState('')
-  const [category, setCategory] = useState('')
+  const [selectedCategoryId, setSelectedCategoryId] = useState('')
 
   const allCategories = useAllCategories()
 
@@ -40,15 +40,15 @@ export default function () {
       })
   }, [])
 
-  const addItem = (title: string) => {
-    const newTask = new Task('', title)
+  const addItem = () => {
+    const newTask = new Task('', inputValue, selectedCategoryId)
     setList([...list, newTask])
     newTask.create()
   }
 
   const handleAddTaskButton = () => {
     if (inputValue) {
-      addItem(inputValue)
+      addItem()
       setInputValue('')
       setShowModal(false)
     }
@@ -93,6 +93,7 @@ export default function () {
       <View style={{ flexDirection: 'row' }}>
         <Checkbox value="" />
         <Text style={SwipableStyles.text}>{data.item.name}</Text>
+        <Text style={SwipableStyles.text}>{data.item.categoryId}</Text>
       </View>
     </TouchableHighlight>
   )
@@ -153,11 +154,11 @@ export default function () {
                 placeholder="Add Item"
               />
               <Select
-                selectedValue={category}
+                selectedValue={selectedCategoryId}
                 minWidth={200}
                 accessibilityLabel="Select your favorite programming language"
                 placeholder="カテゴリ"
-                onValueChange={(itemValue) => setCategory(itemValue)}
+                onValueChange={(itemValue) => setSelectedCategoryId(itemValue)}
                 _selectedItem={{
                   bg: 'cyan.600',
                   endIcon: <CheckIcon size={4} />,

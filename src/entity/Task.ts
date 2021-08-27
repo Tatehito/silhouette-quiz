@@ -3,10 +3,12 @@ import db from '../../firebase'
 class Task {
   id: string
   name: string
+  categoryId: string
 
-  constructor(id: string, name: string) {
+  constructor(id: string, name: string, categoryId: string) {
     this.id = id
     this.name = name
+    this.categoryId = categoryId
   }
 
   static async getAll(): Promise<Task[]> {
@@ -16,7 +18,7 @@ class Task {
         .then((querySnapshot) => {
           const tasks: Task[] = []
           querySnapshot.forEach((doc) => {
-            tasks.push(new Task(doc.id, doc.data().name))
+            tasks.push(new Task(doc.id, doc.data().name, doc.data().categoryId))
           })
           resolve(tasks)
         })
@@ -28,7 +30,7 @@ class Task {
 
   create(): void {
     db.collection('tasks')
-      .add({ name: this.name })
+      .add({ name: this.name, categoryId: this.categoryId })
       .then((doc) => {
         this.id = doc.id
       })
