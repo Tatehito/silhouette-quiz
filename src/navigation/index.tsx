@@ -2,26 +2,18 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import * as React from 'react'
 
+import HogeScreen from '../screens/HogeScreen'
 import TabOneScreen from '../screens/TopScreen'
 import { RootStackParamList } from '../types'
-// import LinkingConfiguration from './LinkingConfiguration'
+const Stack = createStackNavigator<RootStackParamList>()
 
 export default function Navigation() {
   return (
-    <NavigationContainer
-    // linking={LinkingConfiguration}
-    >
-      <RootNavigator />
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="root" component={TabOneScreen} />
+        <Stack.Screen name="QuestionCreate" component={HogeScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
-  )
-}
-
-const Stack = createStackNavigator<RootStackParamList>()
-
-function RootNavigator() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: true }}>
-      <Stack.Screen name="Root" component={TabOneScreen} />
-    </Stack.Navigator>
   )
 }
