@@ -56,6 +56,10 @@ export default function ({ navigation }) {
 
   return (
     <NativeBaseProvider>
+      <View>
+        <Text onPress={handleClickQuiz}>＋もんだいをつくる</Text>
+      </View>
+
       <Center flex={1}>
         <View>
           <SwipeListView
