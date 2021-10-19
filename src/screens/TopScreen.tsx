@@ -2,21 +2,10 @@ import { Center, NativeBaseProvider } from 'native-base'
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, Button } from 'react-native'
 import { SwipeListView } from 'react-native-swipe-list-view'
-
-import Task from '../entity/Task'
+import storage from '../storage/Storage'
 
 export default function ({ navigation }) {
   const [list, setList] = useState<Task[]>()
-
-  useEffect(() => {
-    Task.getAll()
-      .then((tasks) => {
-        setList(tasks)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }, [])
 
   const closeRow = (rowMap, rowKey) => {
     if (rowMap[rowKey]) {
@@ -32,6 +21,16 @@ export default function ({ navigation }) {
 
   const handleClickQuiz = () => {
     navigation.navigate('QuestionCreate')
+  }
+
+  const handleClickStartQuizButton = () => {
+    storage
+      .load({
+        key: 'name',
+      })
+      .then((data) => {
+        console.log(data)
+      })
   }
 
   const renderHiddenItem = (data, rowMap) => (
@@ -75,7 +74,10 @@ export default function ({ navigation }) {
       </Center>
 
       <Center flex={1}>
-        <Button onPress={handleClickQuiz} title="クイズをはじめる" />
+        <Button onPress={handleClickStartQuizButton} title="クイズをはじめる" />
+      </Center>
+      <Center flex={1}>
+        <Text onPress={handleClickQuiz}>＋もんだいをつくる</Text>
       </Center>
     </NativeBaseProvider>
   )
