@@ -12,8 +12,8 @@ const documentDir = FileSystem.documentDirectory + 'silhouette-quiz/'
 
 export default function ({ navigation }) {
   const [name, setName] = useState<string>('')
-  const [questionImage, setQuestionImage] = useState<string>('')
-  const [answerImage, setAnswerImage] = useState<string>('')
+  const [questionImage, setQuestionImage] = useState<string>()
+  const [answerImage, setAnswerImage] = useState<string>()
 
   const NameInput = () => {
     return (

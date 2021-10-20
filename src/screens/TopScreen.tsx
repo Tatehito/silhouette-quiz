@@ -62,12 +62,8 @@ export default function ({ navigation }) {
   return (
     <NativeBaseProvider>
       <Center flex={1}>
-        <Button onPress={() => handleClickStartQuizButton()} title="クイズをはじめる" />
-      </Center>
-      <Center flex={1}>
         <Text onPress={() => handleClickCreateQuizButton()}>＋もんだいをつくる</Text>
       </Center>
-
       <Center flex={1}>
         <View>
           {questions.map((question, index) => (
@@ -76,6 +72,9 @@ export default function ({ navigation }) {
             </Text>
           ))}
         </View>
+      </Center>
+      <Center flex={1}>
+        <Button onPress={() => handleClickStartQuizButton()} title="クイズをはじめる" />
       </Center>
     </NativeBaseProvider>
   )
