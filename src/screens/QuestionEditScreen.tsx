@@ -28,6 +28,9 @@ export default function ({ route, navigation }) {
   return (
     <NativeBaseProvider>
       <Center flex={1}>
+        <Text>なまえ</Text>
+      </Center>
+      <Center flex={1}>
         <Text>{question.name}</Text>
       </Center>
       <Center flex={1}>

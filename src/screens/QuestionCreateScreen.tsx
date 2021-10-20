@@ -1,8 +1,8 @@
 import * as FileSystem from 'expo-file-system'
 import * as ImagePicker from 'expo-image-picker'
-import { NativeBaseProvider, Center } from 'native-base'
+import { NativeBaseProvider, Center, Input } from 'native-base'
 import React, { useState } from 'react'
-import { Text, View, Button, TextInput, Image } from 'react-native'
+import { Text, View, Button, Image } from 'react-native'
 
 import storage from '../storage/Storage'
 
@@ -14,15 +14,6 @@ export default function ({ navigation }) {
   const [name, setName] = useState<string>('')
   const [questionImage, setQuestionImage] = useState<string>()
   const [answerImage, setAnswerImage] = useState<string>()
-
-  const NameInput = () => {
-    return (
-      <View>
-        <Text>なまえ</Text>
-        <TextInput value={name} onChangeText={(value) => setName(value)} />
-      </View>
-    )
-  }
 
   const handleClickQuestionImagePickButton = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -90,7 +81,16 @@ export default function ({ navigation }) {
   return (
     <NativeBaseProvider>
       <Center flex={1}>
-        <NameInput />
+        <Text>なまえ</Text>
+        <Input
+          value={name}
+          onChangeText={(value) => setName(value)}
+          mx="3"
+          w={{
+            base: '75%',
+            md: '25%',
+          }}
+        />
       </Center>
       <Center flex={1}>
         <Text>もんだい</Text>
