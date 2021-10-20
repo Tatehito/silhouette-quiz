@@ -2,6 +2,8 @@ import { NativeBaseProvider, Center } from 'native-base'
 import React, { useState, useEffect } from 'react'
 import { Text, View, Button, TextInput } from 'react-native'
 
+import storage from '../storage/Storage'
+
 export default function ({ navigation }) {
   const [name, setName] = useState<string>('')
 
@@ -14,7 +16,21 @@ export default function ({ navigation }) {
     )
   }
 
-  const handleClickSave = () => {}
+  const handleClickSave = () => {
+    storage.getIdsForKey('question').then((ids) => {
+      const nextId = String(ids.length + 1)
+      storage
+        .save({
+          key: 'question',
+          id: nextId,
+          data: {
+            id: nextId,
+            name,
+          },
+        })
+        .then(navigation.goBack())
+    })
+  }
 
   const handleClickBackButton = () => {
     navigation.goBack()

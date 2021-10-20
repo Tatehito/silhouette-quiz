@@ -5,9 +5,10 @@ import { Text, View, Button } from 'react-native'
 import storage from '../storage/Storage'
 
 export default function ({ navigation }) {
-  const [list, setList] = useState<Question[]>([])
+  const [questions, setQuestions] = useState<Question[]>([])
 
   interface Question {
+    id: number
     name: string
   }
 
@@ -15,7 +16,7 @@ export default function ({ navigation }) {
     () =>
       navigation.addListener('focus', () => {
         storage.getAllDataForKey('question').then((questions) => {
-          setList(questions)
+          setQuestions(questions)
           // For debug
           console.log(questions)
         })
@@ -26,15 +27,6 @@ export default function ({ navigation }) {
   const handleClickStartQuizButton = () => {}
 
   const handleClickCreateQuizButton = () => {
-    // storage.getIdsForKey('question').then((ids) => {
-    //   storage.save({
-    //     key: 'question',
-    //     id: String(ids.length + 1),
-    //     data: {
-    //       name: 'nontan' + ids.length,
-    //     },
-    //   })
-    // })
     navigation.navigate('QuestionCreate')
   }
 
@@ -53,14 +45,13 @@ export default function ({ navigation }) {
       <Center flex={1}>
         <Text onPress={() => handleClickCreateQuizButton()}>＋もんだいをつくる</Text>
       </Center>
-      <Center flex={1}>
-        <Text onPress={() => handleClickDeleteButton(3)}>＋もんだいを消す</Text>
-      </Center>
 
       <Center flex={1}>
         <View>
-          {list.map((item, index) => (
-            <Text key={index}>{item.name}</Text>
+          {questions.map((question, index) => (
+            <Text key={index} onPress={() => handleClickDeleteButton(question.id)}>
+              {question.name}
+            </Text>
           ))}
         </View>
       </Center>
