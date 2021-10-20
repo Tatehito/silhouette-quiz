@@ -30,10 +30,9 @@ export default function ({ navigation }) {
     navigation.navigate('QuestionCreate')
   }
 
-  const handleClickDeleteButton = (id: number) => {
-    storage.remove({
-      key: 'question',
-      id: String(id),
+  const handleClickQuestion = (question: Question) => {
+    navigation.navigate('QuestionEdit', {
+      question,
     })
   }
 
@@ -49,7 +48,7 @@ export default function ({ navigation }) {
       <Center flex={1}>
         <View>
           {questions.map((question, index) => (
-            <Text key={index} onPress={() => handleClickDeleteButton(question.id)}>
+            <Text key={index} onPress={() => handleClickQuestion(question)}>
               {question.name}
             </Text>
           ))}

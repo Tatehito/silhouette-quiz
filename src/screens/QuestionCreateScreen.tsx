@@ -28,7 +28,7 @@ export default function ({ navigation }) {
             name,
           },
         })
-        .then(navigation.goBack())
+        .then(navigation.navigate('Root'))
     })
   }
 
