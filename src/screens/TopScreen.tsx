@@ -1,22 +1,33 @@
 import { Center, NativeBaseProvider } from 'native-base'
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, Button } from 'react-native'
-import { SwipeListView } from 'react-native-swipe-list-view'
+import { Text, View, Button } from 'react-native'
+
 import storage from '../storage/Storage'
 
 export default function ({ navigation }) {
-  const [list, setList] = useState<Task[]>()
+  const [list, setList] = useState<Question[]>([])
 
-  const closeRow = (rowMap, rowKey) => {
-    if (rowMap[rowKey]) {
-      rowMap[rowKey].closeRow()
-    }
+  interface Question {
+    name: string
   }
 
-  const deleteRow = (rowMap, task: Task) => {
-    closeRow(rowMap, task.key)
-    setList(list.filter((t) => t !== task))
-    task.delete()
+  useEffect(
+    () =>
+      navigation.addListener('focus', () => {
+        storage.getAllDataForKey('question').then((questions) => {
+          setList(questions)
+          // For debug
+          console.log(questions)
+        })
+      }),
+    [],
+  )
+
+  const handleClickDeleteButton = (id: number) => {
+    storage.remove({
+      key: 'question',
+      id: String(id),
+    })
   }
 
   const handleClickQuiz = () => {
@@ -24,34 +35,16 @@ export default function ({ navigation }) {
   }
 
   const handleClickStartQuizButton = () => {
-    storage
-      .load({
-        key: 'name',
+    storage.getIdsForKey('question').then((ids) => {
+      storage.save({
+        key: 'question',
+        id: String(ids.length + 1),
+        data: {
+          name: 'nontan' + ids.length,
+        },
       })
-      .then((data) => {
-        console.log(data)
-      })
+    })
   }
-
-  const renderHiddenItem = (data, rowMap) => (
-    <View style={styles.rowBack}>
-      <TouchableOpacity
-        style={[styles.backRightBtn, styles.backRightBtnRight]}
-        onPress={() => deleteRow(rowMap, data.item)}
-      >
-        <Text style={styles.backTextWhite}>Delete</Text>
-      </TouchableOpacity>
-    </View>
-  )
-
-  const renderItem = (data) => (
-    <TouchableHighlight style={SwipableStyles.rowFront} underlayColor="#AAA">
-      <View style={{ flexDirection: 'row' }}>
-        <Text style={SwipableStyles.text}>{data.item.name}</Text>
-        <Text style={SwipableStyles.text}>{data.item.categoryId}</Text>
-      </View>
-    </TouchableHighlight>
-  )
 
   return (
     <NativeBaseProvider>
@@ -60,81 +53,22 @@ export default function ({ navigation }) {
       </View>
 
       <Center flex={1}>
-        <View>
-          <SwipeListView
-            data={list}
-            renderItem={renderItem}
-            renderHiddenItem={renderHiddenItem}
-            rightOpenValue={-75}
-            previewRowKey={'0'}
-            previewOpenValue={-40}
-            previewOpenDelay={3000}
-          />
-        </View>
-      </Center>
-
-      <Center flex={1}>
         <Button onPress={handleClickStartQuizButton} title="クイズをはじめる" />
       </Center>
       <Center flex={1}>
         <Text onPress={handleClickQuiz}>＋もんだいをつくる</Text>
       </Center>
+      <Center flex={1}>
+        <Text onPress={() => handleClickDeleteButton(3)}>＋もんだいを消す</Text>
+      </Center>
+
+      <Center flex={1}>
+        <View>
+          {list.map((item, index) => (
+            <Text key={index}>{item.name}</Text>
+          ))}
+        </View>
+      </Center>
     </NativeBaseProvider>
   )
 }
-
-const SwipableStyles = StyleSheet.create({
-  rowFront: {
-    backgroundColor: '#fff',
-    borderBottomColor: 'red',
-    borderBottomWidth: 1,
-    justifyContent: 'center',
-    height: 50,
-    paddingLeft: 5,
-  },
-  text: {
-    marginLeft: 10,
-  },
-})
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    flex: 1,
-  },
-  backTextWhite: {
-    color: '#FFF',
-  },
-  rowFront: {
-    alignItems: 'center',
-    backgroundColor: '#CCC',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    justifyContent: 'center',
-    height: 50,
-  },
-  rowBack: {
-    alignItems: 'center',
-    backgroundColor: '#DDD',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft: 15,
-  },
-  backRightBtn: {
-    alignItems: 'center',
-    bottom: 0,
-    justifyContent: 'center',
-    position: 'absolute',
-    top: 0,
-    width: 75,
-  },
-  backRightBtnLeft: {
-    backgroundColor: 'blue',
-    right: 75,
-  },
-  backRightBtnRight: {
-    backgroundColor: 'red',
-    right: 0,
-  },
-})

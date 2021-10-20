@@ -21,26 +21,25 @@ export default function ({ navigation }) {
   }
 
   const handleClickBack = () => {
-    navigation.navigate('Root')
+    navigation.goBack()
   }
 
   const handleClickSave = () => {
     storage.save({
-      key: 'name',
-      data: {
-        name: 'hogehogege',
-      },
+      key: 'hoge',
+      id: '1001',
+      data: 'aaaabbbb',
     })
   }
 
   return (
     <NativeBaseProvider>
       <View>
-        <Text onPress={handleClickBack}>もどる</Text>
-      </View>
-      <View>
         <NameInput />
         <SaveButton />
+      </View>
+      <View>
+        <Text onPress={handleClickBack}>もどる</Text>
       </View>
     </NativeBaseProvider>
   )
