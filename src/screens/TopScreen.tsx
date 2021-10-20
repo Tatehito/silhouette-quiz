@@ -23,6 +23,21 @@ export default function ({ navigation }) {
     [],
   )
 
+  const handleClickStartQuizButton = () => {}
+
+  const handleClickCreateQuizButton = () => {
+    // storage.getIdsForKey('question').then((ids) => {
+    //   storage.save({
+    //     key: 'question',
+    //     id: String(ids.length + 1),
+    //     data: {
+    //       name: 'nontan' + ids.length,
+    //     },
+    //   })
+    // })
+    navigation.navigate('QuestionCreate')
+  }
+
   const handleClickDeleteButton = (id: number) => {
     storage.remove({
       key: 'question',
@@ -30,33 +45,13 @@ export default function ({ navigation }) {
     })
   }
 
-  const handleClickQuiz = () => {
-    navigation.navigate('QuestionCreate')
-  }
-
-  const handleClickStartQuizButton = () => {
-    storage.getIdsForKey('question').then((ids) => {
-      storage.save({
-        key: 'question',
-        id: String(ids.length + 1),
-        data: {
-          name: 'nontan' + ids.length,
-        },
-      })
-    })
-  }
-
   return (
     <NativeBaseProvider>
-      <View>
-        <Text onPress={handleClickQuiz}>＋もんだいをつくる</Text>
-      </View>
-
       <Center flex={1}>
-        <Button onPress={handleClickStartQuizButton} title="クイズをはじめる" />
+        <Button onPress={() => handleClickStartQuizButton()} title="クイズをはじめる" />
       </Center>
       <Center flex={1}>
-        <Text onPress={handleClickQuiz}>＋もんだいをつくる</Text>
+        <Text onPress={() => handleClickCreateQuizButton()}>＋もんだいをつくる</Text>
       </Center>
       <Center flex={1}>
         <Text onPress={() => handleClickDeleteButton(3)}>＋もんだいを消す</Text>

@@ -1,8 +1,6 @@
-import { NativeBaseProvider } from 'native-base'
+import { NativeBaseProvider, Center } from 'native-base'
 import React, { useState, useEffect } from 'react'
 import { Text, View, Button, TextInput } from 'react-native'
-
-import storage from '../storage/Storage'
 
 export default function ({ navigation }) {
   const [name, setName] = useState<string>('')
@@ -16,31 +14,23 @@ export default function ({ navigation }) {
     )
   }
 
-  const SaveButton = () => {
-    return <Button onPress={handleClickSave} title="ほぞんする" />
-  }
+  const handleClickSave = () => {}
 
-  const handleClickBack = () => {
+  const handleClickBackButton = () => {
     navigation.goBack()
-  }
-
-  const handleClickSave = () => {
-    storage.save({
-      key: 'hoge',
-      id: '1001',
-      data: 'aaaabbbb',
-    })
   }
 
   return (
     <NativeBaseProvider>
-      <View>
+      <Center flex={1}>
         <NameInput />
-        <SaveButton />
-      </View>
-      <View>
-        <Text onPress={handleClickBack}>もどる</Text>
-      </View>
+      </Center>
+      <Center flex={1}>
+        <Button onPress={() => handleClickSave()} title="ほぞんする" />
+      </Center>
+      <Center flex={1}>
+        <Text onPress={() => handleClickBackButton()}>もどる</Text>
+      </Center>
     </NativeBaseProvider>
   )
 }
