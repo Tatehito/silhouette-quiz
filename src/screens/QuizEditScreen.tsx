@@ -18,7 +18,7 @@ export default function ({ route, navigation }) {
       id: String(question.id),
     })
     FileSystem.deleteAsync(questionImage)
-    navigation.navigate('Root')
+    navigation.navigate('QuizList')
   }
 
   const handleClickBackButton = () => {

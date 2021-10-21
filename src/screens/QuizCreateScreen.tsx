@@ -70,7 +70,7 @@ export default function ({ navigation }) {
         from: answerImage,
         to: documentDir + `'answer_image_'${nextId}`,
       })
-      navigation.navigate('Root')
+      navigation.navigate('QuizList')
     })
   }
 

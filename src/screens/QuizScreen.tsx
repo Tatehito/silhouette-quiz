@@ -31,7 +31,7 @@ export default function ({ navigation }) {
   }
 
   const handleClickEndButton = () => {
-    navigation.navigate('Root')
+    navigation.navigate('QuizList')
   }
 
   const selectQuiz = async () => {
