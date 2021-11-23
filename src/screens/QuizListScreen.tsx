@@ -1,9 +1,10 @@
 import * as FileSystem from 'expo-file-system'
 import * as ImagePicker from 'expo-image-picker'
-import { Center, NativeBaseProvider } from 'native-base'
 import React, { useState, useEffect } from 'react'
-import { Text, View, Button, Platform } from 'react-native'
+import { View, Dimensions, StyleSheet, Text, Platform } from 'react-native'
 
+import PrimaryButton from '../components/PrimaryButton'
+import SwipableList from '../components/SwipableList'
 import storage from '../storage/Storage'
 
 const tempDir = FileSystem.cacheDirectory + 'silhouette-quiz/'
@@ -21,8 +22,6 @@ export default function ({ navigation }) {
     navigation.addListener('focus', () => {
       storage.getAllDataForKey('question').then((questions) => {
         setQuestions(questions)
-        // For debug
-        console.log(questions)
       })
     })
 
@@ -62,22 +61,54 @@ export default function ({ navigation }) {
   }
 
   return (
-    <NativeBaseProvider>
-      <Center flex={1}>
-        <Text onPress={() => handleClickCreateQuizButton()}>＋もんだいをつくる</Text>
-      </Center>
-      <Center flex={1}>
+    <View style={styles.container}>
+      <View style={styles.navbar}>
         <View>
-          {questions.map((question, index) => (
-            <Text key={index} onPress={() => handleClickQuestion(question)}>
-              {question.name}
-            </Text>
-          ))}
+          <Text onPress={() => handleClickCreateQuizButton()} style={styles.createQuizButton}>
+            ＋もんだいをつくる
+          </Text>
         </View>
-      </Center>
-      <Center flex={1}>
-        <Button onPress={() => handleClickStartQuizButton()} title="クイズをはじめる" />
-      </Center>
-    </NativeBaseProvider>
+      </View>
+      <View style={styles.questionList}>
+        <SwipableList dataList={questions} setDataList={setQuestions} handleClickItem={handleClickQuestion} />
+      </View>
+      <View style={styles.startButtonWrapper}>
+        <PrimaryButton onPress={() => handleClickStartQuizButton()} label="クイズをはじめる" />
+      </View>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    height: Dimensions.get('window').height,
+  },
+  navbar: {
+    backgroundColor: '#fff',
+    paddingTop: 70,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    marginBottom: 20,
+    borderBottomColor: '#E8E8E8',
+    borderBottomWidth: 1,
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
+  createQuizButton: {
+    width: 140,
+    color: '#5DB075',
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'right',
+  },
+  questionList: {
+    height: Dimensions.get('window').height - 350,
+    backgroundColor: '#fff',
+    marginBottom: 40,
+  },
+  startButtonWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+})
