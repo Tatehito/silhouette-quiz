@@ -3,21 +3,17 @@ import { NativeBaseProvider, Center } from 'native-base'
 import React from 'react'
 import { Text, Image } from 'react-native'
 
-import storage from '../storage/Storage'
-
-const documentDir = FileSystem.documentDirectory + 'silhouette-quiz/'
+import useDeleteQuestion from '../hooks/useDeleteQuestion'
 
 export default function ({ route, navigation }) {
   const { question } = route.params
+  const documentDir = FileSystem.documentDirectory + 'silhouette-quiz/'
   const questionImage = documentDir + `'question_image_'${question.id}`
   const answerImage = documentDir + `'answer_image_'${question.id}`
+  const deleteQuestion = useDeleteQuestion()
 
-  const handleClickDeleteButton = async () => {
-    await storage.remove({
-      key: 'question',
-      id: String(question.id),
-    })
-    FileSystem.deleteAsync(questionImage)
+  const handleClickDeleteButton = () => {
+    deleteQuestion(question)
     navigation.navigate('QuizList')
   }
 
