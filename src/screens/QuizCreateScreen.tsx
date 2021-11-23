@@ -4,6 +4,7 @@ import { NativeBaseProvider, Center, Input } from 'native-base'
 import React, { useState } from 'react'
 import { Text, View, Button, Image } from 'react-native'
 
+import PrimaryButton from '../components/PrimaryButton'
 import storage from '../storage/Storage'
 
 // TODO: 全画面共通の定義にしたい
@@ -107,7 +108,7 @@ export default function ({ navigation }) {
         <Image source={{ uri: answerImage }} style={{ width: 200, height: 200 }} />
       </Center>
       <Center flex={1}>
-        <Button onPress={() => handleClickSave()} title="ほぞんする" />
+        <PrimaryButton onPress={() => handleClickSave()} label="ほぞんする" />
       </Center>
       <Center flex={1}>
         <Text onPress={() => handleClickBackButton()}>もどる</Text>

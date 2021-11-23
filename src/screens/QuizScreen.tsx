@@ -3,6 +3,7 @@ import { NativeBaseProvider, Center } from 'native-base'
 import React, { useState, useEffect } from 'react'
 import { Text, Image } from 'react-native'
 
+import PrimaryButton from '../components/PrimaryButton'
 import storage from '../storage/Storage'
 
 const documentDir = FileSystem.documentDirectory + 'silhouette-quiz/'
@@ -42,7 +43,10 @@ export default function ({ navigation }) {
 
   const NextButton = () => {
     return (
-      <Text onPress={() => handleClickNextButton()}>{mode === 'question' ? 'こたえをみる' : 'つぎのもんだい'}</Text>
+      <PrimaryButton
+        onPress={() => handleClickNextButton()}
+        label={mode === 'question' ? 'こたえをみる' : 'つぎのもんだい'}
+      />
     )
   }
 
