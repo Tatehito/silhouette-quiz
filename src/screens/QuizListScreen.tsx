@@ -63,11 +63,9 @@ export default function ({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.navbar}>
-        <View>
-          <Text onPress={() => handleClickCreateQuizButton()} style={styles.createQuizButton}>
-            ＋もんだいをつくる
-          </Text>
-        </View>
+        <Text onPress={() => handleClickCreateQuizButton()} style={styles.createQuizButton}>
+          ＋もんだいをつくる
+        </Text>
       </View>
       <View style={styles.questionList}>
         <SwipableList dataList={questions} setDataList={setQuestions} handleClickItem={handleClickQuestion} />
@@ -92,8 +90,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderBottomColor: '#E8E8E8',
     borderBottomWidth: 1,
-    display: 'flex',
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   createQuizButton: {
     width: 140,
@@ -108,7 +106,6 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   startButtonWrapper: {
-    display: 'flex',
     alignItems: 'center',
   },
 })

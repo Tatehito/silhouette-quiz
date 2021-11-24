@@ -1,7 +1,6 @@
 import * as FileSystem from 'expo-file-system'
-import { NativeBaseProvider, Center } from 'native-base'
 import React from 'react'
-import { Text, Image } from 'react-native'
+import { Text, Image, StyleSheet, View } from 'react-native'
 
 import useDeleteQuestion from '../hooks/useDeleteQuestion'
 
@@ -22,31 +21,61 @@ export default function ({ route, navigation }) {
   }
 
   return (
-    <NativeBaseProvider>
-      <Center flex={1}>
+    <View>
+      <View style={styles.navbar}>
+        <Text onPress={() => handleClickBackButton()} style={styles.backButton}>
+          もどる
+        </Text>
+        <Text onPress={() => handleClickDeleteButton()} style={styles.deleteButton}>
+          さくじょする
+        </Text>
+      </View>
+      <View>
         <Text>なまえ</Text>
-      </Center>
-      <Center flex={1}>
+      </View>
+      <View>
         <Text>{question.name}</Text>
-      </Center>
-      <Center flex={1}>
+      </View>
+      <View>
         <Text>もんだい</Text>
-      </Center>
-      <Center flex={1}>
+      </View>
+      <View>
         <Image source={{ uri: questionImage }} style={{ width: 200, height: 200 }} />
-      </Center>
-      <Center flex={1}>
+      </View>
+      <View>
         <Text>こたえ</Text>
-      </Center>
-      <Center flex={1}>
+      </View>
+      <View>
         <Image source={{ uri: answerImage }} style={{ width: 200, height: 200 }} />
-      </Center>
-      <Center flex={1}>
-        <Text onPress={() => handleClickDeleteButton()}>さくじょする</Text>
-      </Center>
-      <Center flex={1}>
-        <Text onPress={() => handleClickBackButton()}>もどる</Text>
-      </Center>
-    </NativeBaseProvider>
+      </View>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  navbar: {
+    backgroundColor: '#fff',
+    paddingTop: 70,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    marginBottom: 20,
+    borderBottomColor: '#E8E8E8',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  backButton: {
+    width: 150,
+    color: '#5DB075',
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'left',
+  },
+  deleteButton: {
+    width: 150,
+    color: '#FF0000',
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'right',
+  },
+})
