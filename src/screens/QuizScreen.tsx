@@ -1,7 +1,6 @@
 import * as FileSystem from 'expo-file-system'
-import { NativeBaseProvider, Center } from 'native-base'
 import React, { useState, useEffect } from 'react'
-import { Text, Image } from 'react-native'
+import { Text, Image, View, StyleSheet, Dimensions } from 'react-native'
 
 import PrimaryButton from '../components/PrimaryButton'
 import storage from '../storage/Storage'
@@ -41,29 +40,52 @@ export default function ({ navigation }) {
     setQuizId(quizIds[Math.floor(Math.random() * quizIds.length)])
   }
 
-  const NextButton = () => {
-    return (
-      <PrimaryButton
-        onPress={() => handleClickNextButton()}
-        label={mode === 'question' ? 'こたえをみる' : 'つぎのもんだい'}
-      />
-    )
-  }
-
   return (
-    <NativeBaseProvider>
-      <Center flex={1}>
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      </Center>
-      <Center flex={1}>
-        <Text>だーれだ？</Text>
-      </Center>
-      <Center flex={1}>
-        <NextButton />
-      </Center>
-      <Center flex={1}>
-        <Text onPress={() => handleClickEndButton()}>クイズをおわる</Text>
-      </Center>
-    </NativeBaseProvider>
+    <View style={styles.container}>
+      <View style={styles.questionImageWrapper}>
+        <Image source={{ uri: image }} style={styles.questionImage} />
+        <Text style={styles.questionText}>だーれだ？</Text>
+      </View>
+      <View style={styles.buttonWrapper}>
+        <PrimaryButton
+          onPress={() => handleClickNextButton()}
+          label={mode === 'question' ? 'こたえをみる' : 'つぎのもんだい'}
+        />
+        <Text onPress={() => handleClickEndButton()} style={styles.finishButton}>
+          クイズをおわる
+        </Text>
+      </View>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    height: Dimensions.get('window').height,
+  },
+  questionImageWrapper: {
+    height: 600,
+    marginHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  questionImage: {
+    width: '100%',
+    height: '50%',
+    marginBottom: 20,
+  },
+  questionText: {
+    fontSize: 32,
+    fontWeight: '500',
+  },
+  buttonWrapper: {
+    alignItems: 'center',
+  },
+  finishButton: {
+    marginTop: 40,
+    color: '#5DB075',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+})
