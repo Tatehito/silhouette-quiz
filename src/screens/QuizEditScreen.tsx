@@ -1,14 +1,21 @@
 import * as FileSystem from 'expo-file-system'
-import React from 'react'
-import { Text, Image, StyleSheet, View } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
+import React, { useState } from 'react'
+import { Text, View, StyleSheet, Dimensions } from 'react-native'
 
+import QuestionForm from '../components/QuestionForm'
 import useDeleteQuestion from '../hooks/useDeleteQuestion'
+import storage from '../storage/Storage'
+
+// TODO: 全画面共通の定義にしたい
+const tempDir = FileSystem.cacheDirectory + 'silhouette-quiz/'
+const documentDir = FileSystem.documentDirectory + 'silhouette-quiz/'
 
 export default function ({ route, navigation }) {
   const { question } = route.params
-  const documentDir = FileSystem.documentDirectory + 'silhouette-quiz/'
-  const questionImage = documentDir + `'question_image_'${question.id}`
-  const answerImage = documentDir + `'answer_image_'${question.id}`
+  const [name, setName] = useState<string>(question.name)
+  const [questionImage, setQuestionImage] = useState<string>(documentDir + `'question_image_'${question.id}`)
+  const [answerImage, setAnswerImage] = useState<string>(documentDir + `'answer_image_'${question.id}`)
   const deleteQuestion = useDeleteQuestion()
 
   const handleClickDeleteButton = () => {
@@ -20,8 +27,67 @@ export default function ({ route, navigation }) {
     navigation.goBack()
   }
 
+  const handleClickQuestionImagePickButton = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    })
+
+    if (!result.cancelled) {
+      const to = tempDir + 'question_image'
+      await FileSystem.copyAsync({
+        from: result.uri,
+        to,
+      })
+      setQuestionImage(to)
+    }
+  }
+
+  const handleClickAnswerImagePickButton = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    })
+
+    if (!result.cancelled) {
+      const to = tempDir + 'answer_image'
+      await FileSystem.copyAsync({
+        from: result.uri,
+        to,
+      })
+      setAnswerImage(to)
+    }
+  }
+
+  const handleClickSave = () => {
+    storage.getIdsForKey('question').then(async (ids) => {
+      const nextId = String(ids.length + 1)
+      await storage.save({
+        key: 'question',
+        id: nextId,
+        data: {
+          id: nextId,
+          name,
+        },
+      })
+      await FileSystem.copyAsync({
+        from: questionImage,
+        to: documentDir + `'question_image_'${nextId}`,
+      })
+      await FileSystem.copyAsync({
+        from: answerImage,
+        to: documentDir + `'answer_image_'${nextId}`,
+      })
+      navigation.navigate('QuizList')
+    })
+  }
+
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.navbar}>
         <Text onPress={() => handleClickBackButton()} style={styles.backButton}>
           もどる
@@ -30,29 +96,24 @@ export default function ({ route, navigation }) {
           さくじょする
         </Text>
       </View>
-      <View>
-        <Text>なまえ</Text>
-      </View>
-      <View>
-        <Text>{question.name}</Text>
-      </View>
-      <View>
-        <Text>もんだい</Text>
-      </View>
-      <View>
-        <Image source={{ uri: questionImage }} style={{ width: 200, height: 200 }} />
-      </View>
-      <View>
-        <Text>こたえ</Text>
-      </View>
-      <View>
-        <Image source={{ uri: answerImage }} style={{ width: 200, height: 200 }} />
-      </View>
+      <QuestionForm
+        name={name}
+        setName={setName}
+        questionImage={questionImage}
+        answerImage={answerImage}
+        handleClickQuestionImagePickButton={handleClickQuestionImagePickButton}
+        handleClickAnswerImagePickButton={handleClickAnswerImagePickButton}
+        handleClickSave={handleClickSave}
+      />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    height: Dimensions.get('window').height,
+  },
   navbar: {
     backgroundColor: '#fff',
     paddingTop: 70,
