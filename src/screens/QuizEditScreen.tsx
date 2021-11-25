@@ -63,27 +63,24 @@ export default function ({ route, navigation }) {
     }
   }
 
-  const handleClickSave = () => {
-    storage.getIdsForKey('question').then(async (ids) => {
-      const nextId = String(ids.length + 1)
-      await storage.save({
-        key: 'question',
-        id: nextId,
-        data: {
-          id: nextId,
-          name,
-        },
-      })
-      await FileSystem.copyAsync({
-        from: questionImage,
-        to: documentDir + `'question_image_'${nextId}`,
-      })
-      await FileSystem.copyAsync({
-        from: answerImage,
-        to: documentDir + `'answer_image_'${nextId}`,
-      })
-      navigation.navigate('QuizList')
+  const handleClickSave = async () => {
+    await storage.save({
+      key: 'question',
+      id: question.id,
+      data: {
+        id: question.id,
+        name,
+      },
     })
+    await FileSystem.copyAsync({
+      from: questionImage,
+      to: documentDir + `'question_image_'${question.id}`,
+    })
+    await FileSystem.copyAsync({
+      from: answerImage,
+      to: documentDir + `'answer_image_'${question.id}`,
+    })
+    navigation.navigate('QuizList')
   }
 
   return (
