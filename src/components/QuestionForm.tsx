@@ -76,7 +76,7 @@ export default function ({
           <View style={styles.label}>
             <Text style={styles.labelText}>なまえ</Text>
           </View>
-          <Input value={name} onChangeText={(value) => setName(value)} />
+          <Input value={name} onChangeText={(value) => setName(value)} returnKeyType="done" />
         </View>
         <View style={styles.inputWrapper}>
           <View style={styles.label}>
