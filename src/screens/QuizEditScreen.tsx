@@ -100,7 +100,7 @@ export default function ({ route, navigation }) {
         answerImage={answerImage}
         handleClickQuestionImagePickButton={handleClickQuestionImagePickButton}
         handleClickAnswerImagePickButton={handleClickAnswerImagePickButton}
-        handleClickSave={handleClickSave}
+        saveQuestion={handleClickSave}
       />
     </View>
   )

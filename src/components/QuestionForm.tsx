@@ -11,8 +11,24 @@ export default function ({
   answerImage,
   handleClickQuestionImagePickButton,
   handleClickAnswerImagePickButton,
-  handleClickSave,
+  saveQuestion,
 }) {
+  const handleClickSave = async () => {
+    if (!name) {
+      alert('なまえを入力してね')
+      return
+    }
+    if (!questionImage) {
+      alert('もんだいのしゃしんを選んでね')
+      return
+    }
+    if (!answerImage) {
+      alert('こたえのしゃしんを選んでね')
+      return
+    }
+    saveQuestion()
+  }
+
   return (
     <NativeBaseProvider>
       <View style={styles.content}>
