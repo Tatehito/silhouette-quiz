@@ -1,5 +1,4 @@
 import * as FileSystem from 'expo-file-system'
-import * as ImagePicker from 'expo-image-picker'
 import React, { useState } from 'react'
 import { Text, View, StyleSheet, Dimensions } from 'react-native'
 
@@ -8,7 +7,6 @@ import useDeleteQuestion from '../hooks/useDeleteQuestion'
 import storage from '../storage/Storage'
 
 // TODO: 全画面共通の定義にしたい
-const tempDir = FileSystem.cacheDirectory + 'silhouette-quiz/'
 const documentDir = FileSystem.documentDirectory + 'silhouette-quiz/'
 
 export default function ({ route, navigation }) {
@@ -25,42 +23,6 @@ export default function ({ route, navigation }) {
 
   const handleClickBackButton = () => {
     navigation.goBack()
-  }
-
-  const handleClickQuestionImagePickButton = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    })
-
-    if (!result.cancelled) {
-      const to = tempDir + 'question_image'
-      await FileSystem.copyAsync({
-        from: result.uri,
-        to,
-      })
-      setQuestionImage(to)
-    }
-  }
-
-  const handleClickAnswerImagePickButton = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    })
-
-    if (!result.cancelled) {
-      const to = tempDir + 'answer_image'
-      await FileSystem.copyAsync({
-        from: result.uri,
-        to,
-      })
-      setAnswerImage(to)
-    }
   }
 
   const handleClickSave = async () => {
@@ -97,9 +59,9 @@ export default function ({ route, navigation }) {
         name={name}
         setName={setName}
         questionImage={questionImage}
+        setQuestionImage={setQuestionImage}
         answerImage={answerImage}
-        handleClickQuestionImagePickButton={handleClickQuestionImagePickButton}
-        handleClickAnswerImagePickButton={handleClickAnswerImagePickButton}
+        setAnswerImage={setAnswerImage}
         saveQuestion={handleClickSave}
       />
     </View>

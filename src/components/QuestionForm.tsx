@@ -1,3 +1,5 @@
+import * as FileSystem from 'expo-file-system'
+import * as ImagePicker from 'expo-image-picker'
 import { NativeBaseProvider, Input } from 'native-base'
 import React from 'react'
 import { Text, StyleSheet, View, Image } from 'react-native'
@@ -8,11 +10,49 @@ export default function ({
   name,
   setName,
   questionImage,
+  setQuestionImage,
   answerImage,
-  handleClickQuestionImagePickButton,
-  handleClickAnswerImagePickButton,
+  setAnswerImage,
   saveQuestion,
 }) {
+  const tempDir = FileSystem.cacheDirectory + 'silhouette-quiz/'
+
+  const handleClickQuestionImagePickButton = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    })
+
+    if (!result.cancelled) {
+      const to = tempDir + 'question_image'
+      await FileSystem.copyAsync({
+        from: result.uri,
+        to,
+      })
+      setQuestionImage(to)
+    }
+  }
+
+  const handleClickAnswerImagePickButton = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    })
+
+    if (!result.cancelled) {
+      const to = tempDir + 'answer_image'
+      await FileSystem.copyAsync({
+        from: result.uri,
+        to,
+      })
+      setAnswerImage(to)
+    }
+  }
+
   const handleClickSave = async () => {
     if (!name) {
       alert('なまえを入力してね')
