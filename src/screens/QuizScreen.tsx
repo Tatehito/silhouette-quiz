@@ -3,14 +3,18 @@ import React, { useState, useEffect } from 'react'
 import { Text, Image, View, StyleSheet, Dimensions } from 'react-native'
 
 import PrimaryButton from '../components/PrimaryButton'
-import storage from '../storage/Storage'
 
 const documentDir = FileSystem.documentDirectory + 'silhouette-quiz/'
 
-export default function ({ navigation }) {
+export default function ({ route, navigation }) {
+  const { questions } = route.params
   const [mode, setMode] = useState<string>()
-  const [questionImage, setQuestionImage] = useState<string>()
-  const [answerImage, setAnswerImage] = useState<string>()
+  const [quiz, setQuiz] = useState<Quiz>()
+
+  interface Quiz {
+    id: number
+    name: string
+  }
 
   useEffect(() => {
     setMode('question')
@@ -28,10 +32,7 @@ export default function ({ navigation }) {
 
   const selectQuiz = async () => {
     // 問題をランダム選択する
-    const quizIds = await storage.getIdsForKey('question')
-    const quizId = quizIds[Math.floor(Math.random() * quizIds.length)]
-    setQuestionImage(documentDir + `'question_image_'${quizId}`)
-    setAnswerImage(documentDir + `'answer_image_'${quizId}`)
+    setQuiz(questions[Math.floor(Math.random() * questions.length)])
   }
 
   const handleClickEndButton = () => {
@@ -43,7 +44,7 @@ export default function ({ navigation }) {
       {mode === 'question' && (
         <View>
           <View style={styles.questionImageWrapper}>
-            <Image source={{ uri: questionImage }} style={styles.questionImage} />
+            <Image source={{ uri: documentDir + `'question_image_'${quiz.id}` }} style={styles.questionImage} />
             <Text style={styles.questionText}>だーれだ？</Text>
           </View>
           <View style={styles.buttonWrapper}>
@@ -55,8 +56,8 @@ export default function ({ navigation }) {
       {mode === 'answer' && (
         <View>
           <View style={styles.questionImageWrapper}>
-            <Image source={{ uri: answerImage }} style={styles.questionImage} />
-            <Text style={styles.questionText}>でした！</Text>
+            <Image source={{ uri: documentDir + `'answer_image_'${quiz.id}` }} style={styles.questionImage} />
+            <Text style={styles.questionText}>{quiz.name}でした！</Text>
           </View>
           <View style={styles.buttonWrapper}>
             <PrimaryButton onPress={() => handleClickNextButton()} label="つぎのもんだい" />

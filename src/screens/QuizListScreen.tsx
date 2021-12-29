@@ -47,7 +47,9 @@ export default function ({ navigation }) {
   }, [])
 
   const handleClickStartQuizButton = () => {
-    navigation.navigate('Quiz')
+    navigation.navigate('Quiz', {
+      questions,
+    })
   }
 
   const handleClickCreateQuizButton = () => {
