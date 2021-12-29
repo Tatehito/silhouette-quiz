@@ -73,7 +73,11 @@ export default function ({ navigation }) {
         <SwipableList dataList={questions} setDataList={setQuestions} handleClickItem={handleClickQuestion} />
       </View>
       <View style={styles.startButtonWrapper}>
-        <PrimaryButton onPress={() => handleClickStartQuizButton()} label="クイズをはじめる" />
+        <PrimaryButton
+          onPress={() => handleClickStartQuizButton()}
+          label="クイズをはじめる"
+          disabled={questions.length <= 0}
+        />
       </View>
     </View>
   )
