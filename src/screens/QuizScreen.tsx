@@ -9,48 +9,62 @@ const documentDir = FileSystem.documentDirectory + 'silhouette-quiz/'
 
 export default function ({ navigation }) {
   const [mode, setMode] = useState<string>()
-  const [quizId, setQuizId] = useState<string>()
-  const [image, setImage] = useState<string>()
+  const [questionImage, setQuestionImage] = useState<string>()
+  const [answerImage, setAnswerImage] = useState<string>()
 
   useEffect(() => {
-    selectQuiz()
     setMode('question')
+    selectQuiz()
   }, [])
-
-  useEffect(() => {
-    setImage(documentDir + `'${mode}_image_'${quizId}`)
-  }, [quizId, mode])
 
   const handleClickNextButton = () => {
     if (mode === 'question') {
       setMode('answer')
     } else {
-      selectQuiz()
       setMode('question')
+      selectQuiz()
     }
+  }
+
+  const selectQuiz = async () => {
+    // 問題をランダム選択する
+    const quizIds = await storage.getIdsForKey('question')
+    const quizId = quizIds[Math.floor(Math.random() * quizIds.length)]
+    setQuestionImage(documentDir + `'question_image_'${quizId}`)
+    setAnswerImage(documentDir + `'answer_image_'${quizId}`)
   }
 
   const handleClickEndButton = () => {
     navigation.navigate('QuizList')
   }
 
-  const selectQuiz = async () => {
-    // ランダム選択
-    const quizIds = await storage.getIdsForKey('question')
-    setQuizId(quizIds[Math.floor(Math.random() * quizIds.length)])
-  }
-
   return (
     <View style={styles.container}>
-      <View style={styles.questionImageWrapper}>
-        <Image source={{ uri: image }} style={styles.questionImage} />
-        <Text style={styles.questionText}>だーれだ？</Text>
-      </View>
+      {mode === 'question' && (
+        <View>
+          <View style={styles.questionImageWrapper}>
+            <Image source={{ uri: questionImage }} style={styles.questionImage} />
+            <Text style={styles.questionText}>だーれだ？</Text>
+          </View>
+          <View style={styles.buttonWrapper}>
+            <PrimaryButton onPress={() => handleClickNextButton()} label="こたえをみる" />
+          </View>
+        </View>
+      )}
+
+      {mode === 'answer' && (
+        <View>
+          <View style={styles.questionImageWrapper}>
+            <Image source={{ uri: answerImage }} style={styles.questionImage} />
+            <Text style={styles.questionText}>でした！</Text>
+          </View>
+          <View style={styles.buttonWrapper}>
+            <PrimaryButton onPress={() => handleClickNextButton()} label="つぎのもんだい" />
+          </View>
+        </View>
+      )}
+
       <View style={styles.buttonWrapper}>
-        <PrimaryButton
-          onPress={() => handleClickNextButton()}
-          label={mode === 'question' ? 'こたえをみる' : 'つぎのもんだい'}
-        />
         <Text onPress={() => handleClickEndButton()} style={styles.finishButton}>
           クイズをおわる
         </Text>
