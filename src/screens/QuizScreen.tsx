@@ -31,8 +31,9 @@ export default function ({ route, navigation }) {
   }
 
   const selectQuiz = async () => {
-    // 問題をランダム選択する
-    setQuiz(questions[Math.floor(Math.random() * questions.length)])
+    // 直前のクイズ以外からランダム選択する
+    const nextQuestions = questions.length > 1 ? questions.filter((q) => q !== quiz) : questions
+    setQuiz(nextQuestions[Math.floor(Math.random() * nextQuestions.length)])
   }
 
   const handleClickEndButton = () => {
