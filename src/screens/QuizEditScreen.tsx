@@ -34,14 +34,21 @@ export default function ({ route, navigation }) {
         name,
       },
     })
-    await FileSystem.copyAsync({
-      from: questionImage,
-      to: documentDir + `'question_image_'${question.id}`,
-    })
-    await FileSystem.copyAsync({
-      from: answerImage,
-      to: documentDir + `'answer_image_'${question.id}`,
-    })
+
+    const question_image_path = documentDir + `'question_image_'${question.id}`
+    if (questionImage !== question_image_path) {
+      await FileSystem.copyAsync({
+        from: questionImage,
+        to: question_image_path,
+      })
+    }
+    const answer_image_path = documentDir + `'answer_image_'${question.id}`
+    if (answerImage !== answer_image_path) {
+      await FileSystem.copyAsync({
+        from: answerImage,
+        to: answer_image_path,
+      })
+    }
     navigation.navigate('QuizList')
   }
 
