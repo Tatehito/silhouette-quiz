@@ -1,3 +1,5 @@
+flask
+functions_framework
 rembg
-cv2
-matplotlib
+opencv-python-headless
+numpy

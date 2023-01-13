@@ -1,3 +1,0 @@
-rembg
-cv2
-matplotlib
