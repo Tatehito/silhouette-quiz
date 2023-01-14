@@ -9,7 +9,6 @@ struct ImagePicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode) private var presentationMode
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
-        
         let imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = false
         imagePicker.sourceType = sourceType
@@ -18,8 +17,8 @@ struct ImagePicker: UIViewControllerRepresentable {
         return imagePicker
     }
     
+    // 使用しないが書かないとビルドエラーになる
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {
-        
     }
     
     func makeCoordinator() -> Coordinator {
@@ -35,10 +34,8 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            
-            if let image = info[.originalImage] as? UIImage {
-                parent.selectedImage = image
-            }
+            let image = info[.originalImage] as? UIImage
+            parent.selectedImage = image
             
             parent.presentationMode.wrappedValue.dismiss()
         }
