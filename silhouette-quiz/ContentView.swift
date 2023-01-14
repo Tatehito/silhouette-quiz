@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var image: UIImage?
+    @State private var text: String?
     @State var showingImagePicker = false
         
     var body: some View {
@@ -11,11 +12,9 @@ struct ContentView: View {
                     .resizable()
                     .frame(width: 200, height: 200)
                     .clipShape(Circle())
+                Text(text!)
             } else {
-                Image("noimage")
-                    .resizable()
-                    .frame(width: 200, height: 200)
-                    .clipShape(Circle())
+                Text("noimage")
             }
             Spacer().frame(height: 32)
             Button(action: {
@@ -25,7 +24,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(sourceType: .photoLibrary, selectedImage: $image)
+            ImagePicker(sourceType: .photoLibrary, selectedImage: $image, text: $text)
         }
     }
 }

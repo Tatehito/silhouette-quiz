@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		656F4F5B2972C810009CC640 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F4F5A2972C810009CC640 /* ImagePicker.swift */; };
+		656F4F5D2972D050009CC640 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 656F4F5C2972D050009CC640 /* MobileNetV2.mlmodel */; };
 		65931CC32972C6E70010936C /* silhouette_quizApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65931CC22972C6E70010936C /* silhouette_quizApp.swift */; };
 		65931CC52972C6E70010936C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65931CC42972C6E70010936C /* ContentView.swift */; };
 		65931CC72972C6E90010936C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65931CC62972C6E90010936C /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		656F4F5A2972C810009CC640 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		656F4F5C2972D050009CC640 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MobileNetV2.mlmodel; path = ../../../Downloads/MobileNetV2.mlmodel; sourceTree = "<group>"; };
 		65931CBF2972C6E70010936C /* silhouette-quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "silhouette-quiz.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65931CC22972C6E70010936C /* silhouette_quizApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = silhouette_quizApp.swift; sourceTree = "<group>"; };
 		65931CC42972C6E70010936C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 		65931CC12972C6E70010936C /* silhouette-quiz */ = {
 			isa = PBXGroup;
 			children = (
+				656F4F5C2972D050009CC640 /* MobileNetV2.mlmodel */,
 				65931CC22972C6E70010936C /* silhouette_quizApp.swift */,
 				65931CC42972C6E70010936C /* ContentView.swift */,
 				656F4F5A2972C810009CC640 /* ImagePicker.swift */,
@@ -144,6 +147,7 @@
 			files = (
 				656F4F5B2972C810009CC640 /* ImagePicker.swift in Sources */,
 				65931CC52972C6E70010936C /* ContentView.swift in Sources */,
+				656F4F5D2972D050009CC640 /* MobileNetV2.mlmodel in Sources */,
 				65931CC32972C6E70010936C /* silhouette_quizApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
