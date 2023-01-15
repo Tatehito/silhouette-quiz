@@ -1,11 +1,14 @@
 import SwiftUI
 
 struct QuizCreateView: View {
-    @State var row: Int
-    
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
         VStack {
-            Text("ここは\(row)行目のクイズ登録画面です。")
+            Text("ここはクイズ登録画面です。")
+            Button("キャンセル") {
+                dismiss()
+            }
         }
     }
 }
