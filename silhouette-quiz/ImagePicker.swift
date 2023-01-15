@@ -7,7 +7,6 @@ struct ImagePicker: UIViewControllerRepresentable {
     var sourceType: UIImagePickerController.SourceType = .photoLibrary
     
     @Binding var selectedImage: UIImage?
-    @Binding var text: String?
     @Environment(\.presentationMode) private var presentationMode
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
@@ -40,7 +39,7 @@ struct ImagePicker: UIViewControllerRepresentable {
                 fatalError("Photo doesn't have underlying CGImage.")
             }
             // Model読み込み
-            guard let model = try? VNCoreMLModel(for: MobileNetV2(configuration: MLModelConfiguration()).model) else { fatalError("model initialization failed") }
+            guard let model = try? VNCoreMLModel(for: u2net(configuration: MLModelConfiguration()).model) else { fatalError("model initialization failed") }
             // Request作成
             let coreMLRequest = VNCoreMLRequest(model: model)
             // Handler作成
@@ -49,14 +48,15 @@ struct ImagePicker: UIViewControllerRepresentable {
                 // 実行
                 try handler.perform([coreMLRequest])
                 // 結果の取り出し
-//                let result = coreMLRequest.results?.first as! VNPixelBufferObservation
-//                let ciImage = CIImage(cvPixelBuffer: result.pixelBuffer)
-//                let outputuiImage = UIImage(ciImage: ciImage)
+                let result = coreMLRequest.results?.first as! VNPixelBufferObservation
+                let ciImage = CIImage(cvPixelBuffer: result.pixelBuffer)
+                let outputuiImage = UIImage(ciImage: ciImage)
                 
-                guard let result = coreMLRequest.results?.first as? VNClassificationObservation else { return }
+                // MobileNetV2
+//                guard let result = coreMLRequest.results?.first as? VNClassificationObservation else { return }
+//                parent.text = "\(result.identifier) \(result.confidence * 100)"
                 
-                parent.selectedImage = selectedImage
-                parent.text = "\(result.identifier) \(result.confidence * 100)"
+                parent.selectedImage = outputuiImage
             } catch let error {
                 fatalError("inference error \(error)")
             }

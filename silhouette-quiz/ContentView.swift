@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var image: UIImage?
-    @State private var text: String?
     @State var showingImagePicker = false
         
     var body: some View {
@@ -12,7 +11,6 @@ struct ContentView: View {
                     .resizable()
                     .frame(width: 200, height: 200)
                     .clipShape(Circle())
-                Text(text!)
             } else {
                 Text("noimage")
             }
@@ -24,7 +22,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(sourceType: .photoLibrary, selectedImage: $image, text: $text)
+            ImagePicker(sourceType: .photoLibrary, selectedImage: $image)
         }
     }
 }
