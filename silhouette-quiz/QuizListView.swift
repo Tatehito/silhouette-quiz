@@ -1,11 +1,14 @@
 import SwiftUI
 
 struct QuizListView: View {
-    @State private var image: UIImage?
-        
     var body: some View {
-        VStack {
-            Text("ここはクイズ一覧画面です。")
+        NavigationView {
+            List(1..<20) { index in
+                NavigationLink(destination: QuizCreateView(row: index)) {
+                    Text("\(index)行目")
+                }
+            }
+            .navigationTitle("クイズ一覧")
         }
     }
 }
