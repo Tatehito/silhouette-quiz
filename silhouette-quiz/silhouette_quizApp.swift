@@ -11,7 +11,7 @@ import SwiftUI
 struct silhouette_quizApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            QuizListView()
         }
     }
 }
