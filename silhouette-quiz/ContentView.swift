@@ -10,9 +10,10 @@ struct ContentView: View {
                 Image(uiImage: uiImage)
                     .resizable()
                     .frame(width: 200, height: 200)
-                    .clipShape(Circle())
+                    // 色反転
+                    .colorInvert()
             } else {
-                Text("noimage")
+                Text("シルエット画像をつくるぞ！")
             }
             Spacer().frame(height: 32)
             Button(action: {
