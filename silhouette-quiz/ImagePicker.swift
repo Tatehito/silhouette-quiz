@@ -34,10 +34,10 @@ struct ImagePicker: UIViewControllerRepresentable {
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             let selectedImage = info[.originalImage] as! UIImage
-            
             guard let inputCgImage = selectedImage.cgImage else {
                 fatalError("Photo doesn't have underlying CGImage.")
             }
+
             // Model読み込み
             guard let model = try? VNCoreMLModel(for: u2net(configuration: MLModelConfiguration()).model) else { fatalError("model initialization failed") }
             // Request作成
@@ -49,19 +49,18 @@ struct ImagePicker: UIViewControllerRepresentable {
                 try handler.perform([coreMLRequest])
                 // 結果の取り出し
                 let result = coreMLRequest.results?.first as! VNPixelBufferObservation
-                let ciImage = CIImage(cvPixelBuffer: result.pixelBuffer)
-                let outputuiImage = UIImage(ciImage: ciImage)
-                
-                // MobileNetV2
-//                guard let result = coreMLRequest.results?.first as? VNClassificationObservation else { return }
-//                parent.text = "\(result.identifier) \(result.confidence * 100)"
-                
+                let outputuiImage = UIImage(cgImage: createCGImage(from: result.pixelBuffer)!)
                 parent.selectedImage = outputuiImage
             } catch let error {
                 fatalError("inference error \(error)")
             }
-            
             parent.presentationMode.wrappedValue.dismiss()
+        }
+        
+        func createCGImage(from pixelBuffer: CVPixelBuffer) -> CGImage? {
+           let ciContext = CIContext()
+           let ciImage = CIImage(cvImageBuffer: pixelBuffer)
+           return ciContext.createCGImage(ciImage, from: ciImage.extent)
         }
     }
 }
