@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct QuizEditView: View {
-    @State var row: Int
+    @State var title: String
     
     var body: some View {
         VStack {
-            Text("ここは\(row)行目のクイズ編集画面です。")
+            Text("ここは\(title)のクイズ編集画面です。")
         }
     }
 }

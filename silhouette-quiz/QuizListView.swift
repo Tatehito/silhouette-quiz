@@ -2,12 +2,18 @@ import SwiftUI
 
 struct QuizListView: View {
     @State private var showingQuizCreateView = false
+    var quizList:[Quiz] = []
+    
+    init() {
+        self.quizList = loadQuiz()!
+    }
 
     var body: some View {
         NavigationView {
-            List(1..<11) { index in
-                NavigationLink(destination: QuizEditView(row: index)) {
-                    Text("\(index)つ目のクイズ")
+            List(0 ..< quizList.count) { item in
+                let quiz = quizList[item]
+                NavigationLink(destination: QuizEditView(title: quiz.title)) {
+                    Text(quiz.title)
                 }
             }
             .navigationTitle("クイズ一覧")
@@ -17,11 +23,22 @@ struct QuizListView: View {
                     Button("クイズをつくる") {
                         self.showingQuizCreateView.toggle()
                     }
-                    .sheet(isPresented: $showingQuizCreateView) {
+                    .sheet(isPresented: $showingQuizCreateView, onDismiss: {
+                        // もどってきたときの処理
+                    }) {
                         QuizCreateView()
                     }
                 }
             }
         }
+    }
+    
+    func loadQuiz() -> [Quiz]? {
+        let jsonDecoder = JSONDecoder()
+        guard let data = UserDefaults.standard.data(forKey: "quiz"),
+              let quiz = try? jsonDecoder.decode([Quiz].self, from: data) else {
+            return nil
+        }
+        return quiz
     }
 }
