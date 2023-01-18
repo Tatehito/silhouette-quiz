@@ -24,6 +24,7 @@
 		65931CC82972C6E90010936C /* silhouette_quiz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = silhouette_quiz.entitlements; sourceTree = "<group>"; };
 		65931CCA2972C6E90010936C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		65BE2397297820340023F4B0 /* u2net.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = u2net.mlmodel; sourceTree = "<group>"; };
+		65BE2399297824B60023F4B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +57,7 @@
 		65931CC12972C6E70010936C /* silhouette-quiz */ = {
 			isa = PBXGroup;
 			children = (
+				65BE2399297824B60023F4B0 /* Info.plist */,
 				65BE2397297820340023F4B0 /* u2net.mlmodel */,
 				65931CC22972C6E70010936C /* silhouette_quizApp.swift */,
 				65931CC42972C6E70010936C /* ContentView.swift */,
@@ -278,6 +280,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "silhouette-quiz/Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -318,6 +321,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "silhouette-quiz/Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
