@@ -15,6 +15,7 @@ struct QuizCreateView: View {
                 if title == "" { return }
 
                 saveQuiz(quiz: [Quiz(title: title)])
+                dismiss()
             }
         }
     }
