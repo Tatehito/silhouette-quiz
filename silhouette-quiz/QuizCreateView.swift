@@ -14,17 +14,9 @@ struct QuizCreateView: View {
             Button("登録") {
                 if title == "" { return }
 
-                saveQuiz(quiz: [Quiz(title: title)])
+                _ = Quiz.create(title: title)
                 dismiss()
             }
         }
-    }
-    
-    func saveQuiz(quiz: [Quiz]) {
-        let jsonEncoder = JSONEncoder()
-        guard let data = try? jsonEncoder.encode(quiz) else {
-            return
-        }
-        UserDefaults.standard.set(data, forKey: "quiz")
     }
 }

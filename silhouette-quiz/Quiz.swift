@@ -1,6 +1,16 @@
 import Foundation
+import RealmSwift
 
-struct Quiz: Codable {
-    var id = UUID()
-    let title: String
+class Quiz: Object, ObjectKeyIdentifiable {
+    @objc dynamic var title: String = ""
+    
+    class func create(title: String) -> Quiz {
+        let realm = try! Realm()
+        let q = Quiz()
+        q.title = title
+        try! realm.write {
+            realm.add(q)
+        }
+        return q
+    }
 }
