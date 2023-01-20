@@ -9,7 +9,9 @@ struct QuizListView: View {
         NavigationView {
             List {
                 ForEach(quizzes) { quiz in
-                    Text("\(quiz.title)")
+                    NavigationLink(destination: QuizEditView(quiz: quiz.thaw())) {
+                        Text("\(quiz.title)")
+                    }
                 }.onDelete(perform: $quizzes.remove)
             }
             .navigationTitle("クイズ一覧")

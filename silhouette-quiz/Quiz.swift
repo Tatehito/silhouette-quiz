@@ -13,4 +13,12 @@ class Quiz: Object, ObjectKeyIdentifiable {
         }
         return q
     }
+
+    func update(title: String) -> Quiz {
+        let realm = try! Realm()
+        try! realm.write {
+            self.title = title
+        }
+        return self
+    }
 }
