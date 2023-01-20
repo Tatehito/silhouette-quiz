@@ -10,7 +10,7 @@ struct QuizListView: View {
             List {
                 ForEach(quizzes) { quiz in
                     Text("\(quiz.title)")
-                }
+                }.onDelete(perform: $quizzes.remove)
             }
             .navigationTitle("クイズ一覧")
             .navigationBarTitleDisplayMode(.inline)
