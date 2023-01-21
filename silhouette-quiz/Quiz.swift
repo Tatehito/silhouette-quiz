@@ -4,14 +4,11 @@ import RealmSwift
 class Quiz: Object, ObjectKeyIdentifiable {
     @objc dynamic var title: String = ""
     
-    class func create(title: String) -> Quiz {
+    func create() {
         let realm = try! Realm()
-        let q = Quiz()
-        q.title = title
         try! realm.write {
-            realm.add(q)
+            realm.add(self)
         }
-        return q
     }
 
     func update(title: String) -> Quiz {
