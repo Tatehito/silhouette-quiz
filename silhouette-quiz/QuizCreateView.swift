@@ -5,6 +5,7 @@ struct QuizCreateView: View {
     @Environment(\.dismiss) var dismiss
     @State private var showingQuestionImagePicker = false
     @State private var showingAnswerImagePicker = false
+    @State private var showingAlert = false
 
     @State private var questionUIImage: UIImage?
     @State private var answerUIImage: UIImage?
@@ -33,7 +34,10 @@ struct QuizCreateView: View {
             Button("キャンセル") {
                 handleClickCancelButton()
             }
-
+            
+        }.alert(isPresented: $showingAlert) {
+            Alert(title: Text("保存できませんでした"))
+            
         }.sheet(isPresented: $showingQuestionImagePicker) {
             SwiftUIPicker(image: $questionUIImage)
 
@@ -52,16 +56,37 @@ struct QuizCreateView: View {
     
     private func handleClickSubmitButton() {
         // 入力チェック
-        if quiz.title == "" { return }
+        if quiz.title == "" || questionUIImage == nil || answerUIImage == nil {
+            return
+        }
         
         // 画像をFileManagerに保存
-        
-        // realmにクイズを保存
-        quiz.create()
-        dismiss()
+        quiz.questionImageURL = saveImageDirectory(image: questionUIImage!)
+        quiz.answerImageURL = saveImageDirectory(image: answerUIImage!)
+        if (quiz.questionImageURL != nil && quiz.answerImageURL != nil) {
+            // realmにクイズを保存
+            quiz.create()
+            dismiss()
+        } else {
+            showingAlert = true
+        }
     }
 
     private func handleClickCancelButton() {
         dismiss()
+    }
+
+    func saveImageDirectory (image: UIImage, filename: String = UUID().uuidString) -> String? {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] as NSURL
+        let fileURL = documentsURL.appendingPathComponent(filename)
+        
+        let pngImageData = image.pngData()
+        do {
+            try pngImageData!.write(to: URL(fileURLWithPath: fileURL!.path), options: .atomic)
+        } catch {
+            print(error)
+            return nil
+        }
+        return fileURL?.absoluteString
     }
 }

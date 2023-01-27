@@ -13,7 +13,7 @@ struct QuizEditView: View {
             Button("変更") {
                 if title == "" { return }
                 
-                _ = quiz!.update(title: title)
+                _ = quiz!.update(title: title, questionImageURL: "", answerImageURL: "")
                 dismiss()
 
             }
