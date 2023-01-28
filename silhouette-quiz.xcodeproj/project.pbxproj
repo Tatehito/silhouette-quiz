@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		652BC9342985466500F697D0 /* QuizModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652BC9332985466500F697D0 /* QuizModel.swift */; };
+		653C5161297BAD7B0000A66F /* SwiftUIPHPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653C5160297BAD7B0000A66F /* SwiftUIPHPicker.swift */; };
+		654E4EE52976C6910010033A /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654E4EE42976C6910010033A /* Quiz.swift */; };
+		654E4EEE2976DF800010033A /* u2net.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 654E4EED2976DF800010033A /* u2net.mlmodel */; };
 		656F26FE2973C24A00746D8C /* QuizListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F26FD2973C24A00746D8C /* QuizListView.swift */; };
 		656F27002973C40100746D8C /* QuizCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F26FF2973C40100746D8C /* QuizCreateView.swift */; };
 		656F27042973CA6D00746D8C /* QuizEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F27032973CA6D00746D8C /* QuizEditView.swift */; };
@@ -15,10 +19,14 @@
 		65931CC52972C6E70010936C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65931CC42972C6E70010936C /* ContentView.swift */; };
 		65931CC72972C6E90010936C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65931CC62972C6E90010936C /* Assets.xcassets */; };
 		65931CCB2972C6E90010936C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65931CCA2972C6E90010936C /* Preview Assets.xcassets */; };
-		6596974129782E35007DAD94 /* u2net.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 6596974029782E35007DAD94 /* u2net.mlmodel */; };
+		F51C5967C6F015B3DE696A2F /* Pods_silhouette_quiz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E36A9AC46532636A9954250 /* Pods_silhouette_quiz.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		652BC9332985466500F697D0 /* QuizModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModel.swift; sourceTree = "<group>"; };
+		653C5160297BAD7B0000A66F /* SwiftUIPHPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPHPicker.swift; sourceTree = "<group>"; };
+		654E4EE42976C6910010033A /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
+		654E4EED2976DF800010033A /* u2net.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = u2net.mlmodel; sourceTree = "<group>"; };
 		656F26FD2973C24A00746D8C /* QuizListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListView.swift; sourceTree = "<group>"; };
 		656F26FF2973C40100746D8C /* QuizCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCreateView.swift; sourceTree = "<group>"; };
 		656F27032973CA6D00746D8C /* QuizEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizEditView.swift; sourceTree = "<group>"; };
@@ -29,8 +37,10 @@
 		65931CC62972C6E90010936C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65931CC82972C6E90010936C /* silhouette_quiz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = silhouette_quiz.entitlements; sourceTree = "<group>"; };
 		65931CCA2972C6E90010936C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		6596974029782E35007DAD94 /* u2net.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = u2net.mlmodel; sourceTree = "<group>"; };
 		65BE2399297824B60023F4B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		6E36A9AC46532636A9954250 /* Pods_silhouette_quiz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_silhouette_quiz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BA1CEEC8E5444E5CCF11BFB /* Pods-silhouette-quiz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-silhouette-quiz.release.xcconfig"; path = "Target Support Files/Pods-silhouette-quiz/Pods-silhouette-quiz.release.xcconfig"; sourceTree = "<group>"; };
+		F3854F2A9556D117BD9FB8A5 /* Pods-silhouette-quiz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-silhouette-quiz.debug.xcconfig"; path = "Target Support Files/Pods-silhouette-quiz/Pods-silhouette-quiz.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F51C5967C6F015B3DE696A2F /* Pods_silhouette_quiz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +60,8 @@
 			children = (
 				65931CC12972C6E70010936C /* silhouette-quiz */,
 				65931CC02972C6E70010936C /* Products */,
+				837B303FE87B7579C659ABC7 /* Pods */,
+				FAF7DE255776ECCD92912921 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,11 +76,14 @@
 		65931CC12972C6E70010936C /* silhouette-quiz */ = {
 			isa = PBXGroup;
 			children = (
-				6596974029782E35007DAD94 /* u2net.mlmodel */,
+				654E4EED2976DF800010033A /* u2net.mlmodel */,
 				65BE2399297824B60023F4B0 /* Info.plist */,
 				65931CC22972C6E70010936C /* silhouette_quizApp.swift */,
+				654E4EE42976C6910010033A /* Quiz.swift */,
+				652BC9332985466500F697D0 /* QuizModel.swift */,
 				65931CC42972C6E70010936C /* ContentView.swift */,
 				656F4F5A2972C810009CC640 /* ImagePicker.swift */,
+				653C5160297BAD7B0000A66F /* SwiftUIPHPicker.swift */,
 				656F26FD2973C24A00746D8C /* QuizListView.swift */,
 				656F26FF2973C40100746D8C /* QuizCreateView.swift */,
 				656F27032973CA6D00746D8C /* QuizEditView.swift */,
@@ -86,6 +102,23 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		837B303FE87B7579C659ABC7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F3854F2A9556D117BD9FB8A5 /* Pods-silhouette-quiz.debug.xcconfig */,
+				7BA1CEEC8E5444E5CCF11BFB /* Pods-silhouette-quiz.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FAF7DE255776ECCD92912921 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6E36A9AC46532636A9954250 /* Pods_silhouette_quiz.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -93,9 +126,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65931CCE2972C6E90010936C /* Build configuration list for PBXNativeTarget "silhouette-quiz" */;
 			buildPhases = (
+				FAF468D235FF03DA9C3AC11B /* [CP] Check Pods Manifest.lock */,
 				65931CBB2972C6E70010936C /* Sources */,
 				65931CBC2972C6E70010936C /* Frameworks */,
 				65931CBD2972C6E70010936C /* Resources */,
+				29440B0D1E6D3545D3015A82 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -151,18 +186,63 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		29440B0D1E6D3545D3015A82 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-silhouette-quiz/Pods-silhouette-quiz-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-silhouette-quiz/Pods-silhouette-quiz-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-silhouette-quiz/Pods-silhouette-quiz-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FAF468D235FF03DA9C3AC11B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-silhouette-quiz-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		65931CBB2972C6E70010936C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				656F4F5B2972C810009CC640 /* ImagePicker.swift in Sources */,
-				6596974129782E35007DAD94 /* u2net.mlmodel in Sources */,
 				656F26FE2973C24A00746D8C /* QuizListView.swift in Sources */,
 				65931CC52972C6E70010936C /* ContentView.swift in Sources */,
+				654E4EEE2976DF800010033A /* u2net.mlmodel in Sources */,
+				652BC9342985466500F697D0 /* QuizModel.swift in Sources */,
 				65931CC32972C6E70010936C /* silhouette_quizApp.swift in Sources */,
 				656F27002973C40100746D8C /* QuizCreateView.swift in Sources */,
 				656F27042973CA6D00746D8C /* QuizEditView.swift in Sources */,
+				653C5161297BAD7B0000A66F /* SwiftUIPHPicker.swift in Sources */,
+				654E4EE52976C6910010033A /* Quiz.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +360,7 @@
 		};
 		65931CCF2972C6E90010936C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F3854F2A9556D117BD9FB8A5 /* Pods-silhouette-quiz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -303,7 +384,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
@@ -321,6 +402,7 @@
 		};
 		65931CD02972C6E90010936C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BA1CEEC8E5444E5CCF11BFB /* Pods-silhouette-quiz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -344,7 +426,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
