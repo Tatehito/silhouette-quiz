@@ -17,7 +17,9 @@ struct QuizListView: View {
         NavigationView {
             List {
                 ForEach(quizList) { quiz in
-                    Text("\(quiz.title)")
+                    NavigationLink(destination: QuizEditView(quiz: quiz)) {
+                        Text("\(quiz.title)")
+                    }
                 }
             }
             .navigationTitle("クイズ一覧")
