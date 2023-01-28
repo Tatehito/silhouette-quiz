@@ -5,7 +5,6 @@ struct QuizCreateView: View {
     @Environment(\.dismiss) var dismiss
     @State private var showingQuestionImagePicker = false
     @State private var showingAnswerImagePicker = false
-    @State private var showingAlert = false
 
     @State private var questionUIImage: UIImage?
     @State private var answerUIImage: UIImage?
@@ -23,7 +22,7 @@ struct QuizCreateView: View {
                 Image(uiImage: uiImage).resizable().scaledToFit()
             }
             Button("こたえの写真を選択") {
-                handleClickCancelButton()
+                handleClickSelectAnswerImageButton()
             }
             if let uiImage = answerUIImage {
                 Image(uiImage: uiImage).resizable().scaledToFit()
@@ -34,9 +33,6 @@ struct QuizCreateView: View {
             Button("キャンセル") {
                 handleClickCancelButton()
             }
-            
-        }.alert(isPresented: $showingAlert) {
-            Alert(title: Text("保存できませんでした"))
             
         }.sheet(isPresented: $showingQuestionImagePicker) {
             SwiftUIPicker(image: $questionUIImage)
@@ -59,34 +55,59 @@ struct QuizCreateView: View {
         if quiz.title == "" || questionUIImage == nil || answerUIImage == nil {
             return
         }
-        
+
+        // TODO: トランザクション
+
         // 画像をFileManagerに保存
-        quiz.questionImageURL = saveImageDirectory(image: questionUIImage!)
-        quiz.answerImageURL = saveImageDirectory(image: answerUIImage!)
-        if (quiz.questionImageURL != nil && quiz.answerImageURL != nil) {
-            // realmにクイズを保存
-            quiz.create()
-            dismiss()
-        } else {
-            showingAlert = true
-        }
+        let directoryName = UUID().uuidString
+        createDirectory(atPath: directoryName)
+        createFile(
+            atPath: directoryName + "/question",
+            contents: convertToDataFromUIImage(image: questionUIImage!)
+        )
+        createFile(
+            atPath: directoryName + "/answer",
+            contents: convertToDataFromUIImage(image: answerUIImage!)
+        )
+        
+        // realmにクイズを保存
+        quiz.directoryName = directoryName
+        quiz.create()
+
+        dismiss()
     }
 
     private func handleClickCancelButton() {
         dismiss()
     }
+    
+    private func convertPath(_ path: String) -> String {
+        let rootDirectory = NSHomeDirectory() + "/Documents"
 
-    func saveImageDirectory (image: UIImage, filename: String = UUID().uuidString) -> String? {
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] as NSURL
-        let fileURL = documentsURL.appendingPathComponent(filename)
-        
-        let pngImageData = image.pngData()
-        do {
-            try pngImageData!.write(to: URL(fileURLWithPath: fileURL!.path), options: .atomic)
-        } catch {
-            print(error)
-            return nil
+        if path.hasPrefix("/") {
+            return rootDirectory + path
         }
-        return fileURL?.absoluteString
+        return rootDirectory + "/" + path
+    }
+    
+    func createDirectory(atPath path: String) {
+        if FileManager.default.fileExists(atPath: convertPath(path)) {
+            return
+        }
+        do {
+            try FileManager.default.createDirectory(atPath: convertPath(path), withIntermediateDirectories: false, attributes: nil)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func createFile(atPath path: String, contents: Data?) {
+        if !FileManager.default.createFile(atPath: convertPath(path), contents: contents, attributes: nil) {
+            print("Create file error")
+        }
+    }
+    
+    func convertToDataFromUIImage(image: UIImage) -> Data? {
+        return image.pngData()
     }
 }
