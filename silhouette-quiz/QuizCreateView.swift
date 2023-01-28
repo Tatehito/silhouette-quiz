@@ -60,14 +60,16 @@ struct QuizCreateView: View {
 
         // 画像をFileManagerに保存
         let directoryName = UUID().uuidString
-        createDirectory(atPath: directoryName)
+        createDirectory(directoryName: directoryName)
         createFile(
-            atPath: directoryName + "/question",
-            contents: convertToDataFromUIImage(image: questionUIImage!)
+            directoryName: directoryName,
+            fileName: "question.jpg",
+            contents: convertToDataFromUIImage(image: questionUIImage!)!
         )
         createFile(
-            atPath: directoryName + "/answer",
-            contents: convertToDataFromUIImage(image: answerUIImage!)
+            directoryName: directoryName,
+            fileName: "answer.jpg",
+            contents: convertToDataFromUIImage(image: answerUIImage!)!
         )
         
         // realmにクイズを保存
@@ -81,29 +83,27 @@ struct QuizCreateView: View {
         dismiss()
     }
     
-    private func convertPath(_ path: String) -> String {
-        let rootDirectory = NSHomeDirectory() + "/Documents"
+    func createDirectory(directoryName: String) {
+        let documentDirectoryFileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let directory = documentDirectoryFileURL.appendingPathComponent(directoryName, isDirectory: true)
 
-        if path.hasPrefix("/") {
-            return rootDirectory + path
-        }
-        return rootDirectory + "/" + path
-    }
-    
-    func createDirectory(atPath path: String) {
-        if FileManager.default.fileExists(atPath: convertPath(path)) {
-            return
-        }
         do {
-            try FileManager.default.createDirectory(atPath: convertPath(path), withIntermediateDirectories: false, attributes: nil)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
         } catch let error {
             print(error.localizedDescription)
         }
     }
     
-    func createFile(atPath path: String, contents: Data?) {
-        if !FileManager.default.createFile(atPath: convertPath(path), contents: contents, attributes: nil) {
-            print("Create file error")
+    func createFile(directoryName: String, fileName: String, contents: Data) {
+        var pathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        pathString = "file://" + pathString + "/" + "\(directoryName)/"
+        guard let directoryPath = URL(string: pathString) else { return }
+        let filePath = directoryPath.appendingPathComponent(fileName)
+        
+        do {
+            try contents.write(to: filePath)
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
     
