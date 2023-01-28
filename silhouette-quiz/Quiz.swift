@@ -1,22 +1,18 @@
-import Foundation
-import RealmSwift
+import SwiftUI
 
-class Quiz: Object, ObjectKeyIdentifiable {
-    @objc dynamic var title: String = ""
-    @objc dynamic var directoryName: String?
-    
-    func create() {
-        let realm = try! Realm()
-        try! realm.write {
-            realm.add(self)
-        }
-    }
+struct Quiz: Identifiable {
+    var id = UUID()
+    var title: String
+    var questionImage: UIImage
+    var answerImage: UIImage
 
-    func update(title: String) -> Quiz {
-        let realm = try! Realm()
-        try! realm.write {
-            self.title = title
-        }
-        return self
+    init(quizModel: QuizModel) {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let questionImageURL = documentsURL.appendingPathComponent(quizModel.directoryName! + "/question.jpg")
+        let answerImageURL = documentsURL.appendingPathComponent(quizModel.directoryName! + "/answer.jpg")
+        
+        self.title = quizModel.title
+        self.questionImage = UIImage(contentsOfFile: questionImageURL.path)!
+        self.answerImage = UIImage(contentsOfFile: answerImageURL.path)!
     }
 }

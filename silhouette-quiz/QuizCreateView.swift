@@ -9,7 +9,7 @@ struct QuizCreateView: View {
     @State private var questionUIImage: UIImage?
     @State private var answerUIImage: UIImage?
 
-    @State private var quiz: Quiz = Quiz()
+    @State private var quiz: QuizModel = QuizModel()
 
     var body: some View {
         VStack {

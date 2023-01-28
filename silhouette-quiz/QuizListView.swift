@@ -3,16 +3,22 @@ import RealmSwift
 
 struct QuizListView: View {
     @State private var showingQuizCreateView = false
-    @ObservedResults(Quiz.self) var quizzes
+    @State private var quizList: [Quiz]
+    
+    init() {
+        let realm = try! Realm()
+        let quizModels = realm.objects(QuizModel.self)
+        self.quizList = quizModels.map {
+            Quiz(quizModel: $0)
+        }
+    }
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(quizzes) { quiz in
-                    NavigationLink(destination: QuizEditView(quiz: quiz.thaw())) {
-                        Text("\(quiz.title)")
-                    }
-                }.onDelete(perform: $quizzes.remove)
+                ForEach(quizList) { quiz in
+                    Text("\(quiz.title)")
+                }
             }
             .navigationTitle("クイズ一覧")
             .navigationBarTitleDisplayMode(.inline)
