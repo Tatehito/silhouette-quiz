@@ -2,8 +2,12 @@ import Foundation
 import RealmSwift
 
 class QuizModel: Object, ObjectKeyIdentifiable {
+    @objc dynamic var directoryName: String = ""
     @objc dynamic var title: String = ""
-    @objc dynamic var directoryName: String?
+    
+    override static func primaryKey() -> String? {
+        return "directoryName"
+    }
     
     func create() {
         let realm = try! Realm()

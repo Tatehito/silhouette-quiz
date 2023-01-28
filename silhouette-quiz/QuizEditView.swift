@@ -6,6 +6,8 @@ struct QuizEditView: View {
 
     @State var quiz: Quiz
     
+    let realm = try! Realm()
+    
     var body: some View {
         VStack {
             Text("ここはクイズ編集画面です。")
@@ -17,9 +19,9 @@ struct QuizEditView: View {
             Button("変更") {
                 if quiz.title == "" { return }
                 
-//                _ = quiz!.update(title: title, questionImageURL: "", answerImageURL: "")
+                let model = realm.objects(QuizModel.self).filter("directoryName == %@", quiz.directoryName)[0]
+                _ = model.update(title: quiz.title)
                 dismiss()
-
             }
         }
     }
