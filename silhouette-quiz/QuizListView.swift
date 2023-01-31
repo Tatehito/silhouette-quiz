@@ -11,7 +11,9 @@ struct QuizListView: View {
         NavigationView {
             List {
                 ForEach(quizList) { quiz in
-                    NavigationLink(destination: QuizEditView(quiz: quiz)) {
+                    NavigationLink(destination: QuizEditView(quiz: quiz).onDisappear(perform: {
+                        self.quizList = loadQuiz()
+                    })) {
                         Text("\(quiz.title)")
                     }
                 }
