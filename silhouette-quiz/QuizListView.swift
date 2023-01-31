@@ -32,8 +32,8 @@ struct QuizListView: View {
                     }
                 }
                 ToolbarItem(placement: .bottomBar) {
-                    Button("クイズをはじめる") {
-                        
+                    NavigationLink(destination: QuizView(quizList: quizList)) {
+                        Text("クイズをはじめる")
                     }
                 }
             }
