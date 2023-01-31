@@ -51,7 +51,7 @@ struct QuizCreateView: View {
     }
     
     private func handleClickSubmitButton() {
-        // 入力チェック
+        // TODO: 入力チェック
         if quiz.title == "" || questionUIImage == nil || answerUIImage == nil {
             return
         }
@@ -60,17 +60,24 @@ struct QuizCreateView: View {
 
         // 画像をFileManagerに保存
         let directoryName = UUID().uuidString
-        createDirectory(directoryName: directoryName)
-        createFile(
-            directoryName: directoryName,
-            fileName: "question.jpg",
-            contents: convertToDataFromUIImage(image: questionUIImage!)!
-        )
-        createFile(
-            directoryName: directoryName,
-            fileName: "answer.jpg",
-            contents: convertToDataFromUIImage(image: answerUIImage!)!
-        )
+        FileManagerOperator.createDirectory(directoryName: directoryName)
+        
+        if let uiImage = questionUIImage {
+            guard let imageData = FileManagerOperator.convertToDataFromUIImage(image: uiImage) else { return }
+            FileManagerOperator.createFile(
+                directoryName: directoryName,
+                fileName: "question.jpg",
+                contents: imageData
+            )
+        }
+        if let uiImage = answerUIImage {
+            guard let imageData = FileManagerOperator.convertToDataFromUIImage(image: uiImage) else { return }
+            FileManagerOperator.createFile(
+                directoryName: directoryName,
+                fileName: "answer.jpg",
+                contents: imageData
+            )
+        }
         
         // realmにクイズを保存
         quiz.directoryName = directoryName
@@ -81,33 +88,5 @@ struct QuizCreateView: View {
 
     private func handleClickCancelButton() {
         dismiss()
-    }
-    
-    func createDirectory(directoryName: String) {
-        let documentDirectoryFileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let directory = documentDirectoryFileURL.appendingPathComponent(directoryName, isDirectory: true)
-
-        do {
-            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
-        } catch let error {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func createFile(directoryName: String, fileName: String, contents: Data) {
-        var pathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        pathString = "file://" + pathString + "/" + "\(directoryName)/"
-        guard let directoryPath = URL(string: pathString) else { return }
-        let filePath = directoryPath.appendingPathComponent(fileName)
-        
-        do {
-            try contents.write(to: filePath)
-        } catch let error {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func convertToDataFromUIImage(image: UIImage) -> Data? {
-        return image.pngData()
     }
 }

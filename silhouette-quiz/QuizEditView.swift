@@ -44,17 +44,16 @@ struct QuizEditView: View {
                 // TODO: トランザクションしたい
                 
                 if let uiImage = questionUIImage {
-                    guard let imageData = convertToDataFromUIImage(image: uiImage) else { return }
-                    createFile(
+                    guard let imageData = FileManagerOperator.convertToDataFromUIImage(image: uiImage) else { return }
+                    FileManagerOperator.createFile(
                         directoryName: quiz.directoryName,
                         fileName: "question.jpg",
                         contents: imageData
                     )
                 }
-                
                 if let uiImage = answerUIImage {
-                    guard let imageData = convertToDataFromUIImage(image: uiImage) else { return }
-                    createFile(
+                    guard let imageData = FileManagerOperator.convertToDataFromUIImage(image: uiImage) else { return }
+                    FileManagerOperator.createFile(
                         directoryName: quiz.directoryName,
                         fileName: "answer.jpg",
                         contents: imageData
@@ -80,24 +79,5 @@ struct QuizEditView: View {
     
     private func handleClickSelectAnswerImageButton() {
         showingAnswerImagePicker = true
-    }
-    
-    //TODO: 共通化する
-    func createFile(directoryName: String, fileName: String, contents: Data) {
-        var pathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        pathString = "file://" + pathString + "/" + "\(directoryName)/"
-        guard let directoryPath = URL(string: pathString) else { return }
-        let filePath = directoryPath.appendingPathComponent(fileName)
-        
-        do {
-            try contents.write(to: filePath)
-        } catch let error {
-            print(error.localizedDescription)
-        }
-    }
-    
-    //TODO: 共通化する
-    func convertToDataFromUIImage(image: UIImage) -> Data? {
-        return image.pngData()
     }
 }
