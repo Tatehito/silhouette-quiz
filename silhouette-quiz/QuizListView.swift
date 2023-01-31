@@ -31,6 +31,11 @@ struct QuizListView: View {
                        QuizCreateView()
                     }
                 }
+                ToolbarItem(placement: .bottomBar) {
+                    Button("クイズをはじめる") {
+                        
+                    }
+                }
             }
         }.onAppear {
             self.quizList = loadQuiz()
