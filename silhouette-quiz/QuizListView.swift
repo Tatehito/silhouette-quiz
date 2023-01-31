@@ -31,6 +31,11 @@ struct QuizListView: View {
                        QuizCreateView()
                     }
                 }
+                ToolbarItem(placement: .bottomBar) {
+                    NavigationLink(destination: QuizView(quizList: quizList)) {
+                        Text("クイズをはじめる")
+                    }
+                }
             }
         }.onAppear {
             self.quizList = loadQuiz()

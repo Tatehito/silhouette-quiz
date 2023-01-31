@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		651F1A4A298943A90040059C /* FileManagerOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F1A49298943A90040059C /* FileManagerOperator.swift */; };
+		651F1A4C298949F30040059C /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F1A4B298949F30040059C /* QuizView.swift */; };
 		652BC9342985466500F697D0 /* QuizModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652BC9332985466500F697D0 /* QuizModel.swift */; };
 		653C5161297BAD7B0000A66F /* SwiftUIPHPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653C5160297BAD7B0000A66F /* SwiftUIPHPicker.swift */; };
 		654E4EE52976C6910010033A /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654E4EE42976C6910010033A /* Quiz.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		651F1A49298943A90040059C /* FileManagerOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerOperator.swift; sourceTree = "<group>"; };
+		651F1A4B298949F30040059C /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
 		652BC9332985466500F697D0 /* QuizModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModel.swift; sourceTree = "<group>"; };
 		653C5160297BAD7B0000A66F /* SwiftUIPHPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPHPicker.swift; sourceTree = "<group>"; };
 		654E4EE42976C6910010033A /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				656F26FD2973C24A00746D8C /* QuizListView.swift */,
 				656F26FF2973C40100746D8C /* QuizCreateView.swift */,
 				656F27032973CA6D00746D8C /* QuizEditView.swift */,
+				651F1A4B298949F30040059C /* QuizView.swift */,
 				65931CC62972C6E90010936C /* Assets.xcassets */,
 				65931CC82972C6E90010936C /* silhouette_quiz.entitlements */,
 				65931CC92972C6E90010936C /* Preview Content */,
@@ -241,6 +244,7 @@
 				65931CC52972C6E70010936C /* ContentView.swift in Sources */,
 				651F1A4A298943A90040059C /* FileManagerOperator.swift in Sources */,
 				654E4EEE2976DF800010033A /* u2net.mlmodel in Sources */,
+				651F1A4C298949F30040059C /* QuizView.swift in Sources */,
 				652BC9342985466500F697D0 /* QuizModel.swift in Sources */,
 				65931CC32972C6E70010936C /* silhouette_quizApp.swift in Sources */,
 				656F27002973C40100746D8C /* QuizCreateView.swift in Sources */,
