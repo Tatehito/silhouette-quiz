@@ -57,7 +57,7 @@ struct QuizCreateView: View {
         if questionUIImage == nil {
             return
         }
-        answerUIImage = SilhouetteImageGenerator.execute(targetImage: questionUIImage!)
+        answerUIImage = questionUIImage?.silhouetteImageGenerate()
     }
     
     private func handleClickSubmitButton() {
