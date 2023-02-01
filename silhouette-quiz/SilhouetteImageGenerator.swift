@@ -18,9 +18,16 @@ extension UIImage {
             // 結果の取り出し
             let result = coreMLRequest.results?.first as! VNPixelBufferObservation
             // UIImageに変換
-            let outputuiImage = UIImage(cgImage: convertCGImageFromPixelBuffer(from: result.pixelBuffer)!)
-            // TODO: 色反転
-            return outputuiImage
+            let uiImage = UIImage(cgImage: convertCGImageFromPixelBuffer(from: result.pixelBuffer)!)
+            // 色反転
+            let ciImage:CIImage = CIImage(image: uiImage)!
+            let ciFilter:CIFilter = CIFilter(name: "CIColorInvert")!
+            ciFilter.setValue(ciImage, forKey: kCIInputImageKey)
+            let ciContext:CIContext = CIContext(options: nil)
+            let cgimg:CGImage = ciContext.createCGImage(ciFilter.outputImage!, from:ciFilter.outputImage!.extent)!
+            let outputUIImage:UIImage? = UIImage(cgImage: cgimg, scale: 1.0, orientation:UIImage.Orientation.up)
+            
+            return outputUIImage
         } catch let error {
             fatalError("シルエット画像の生成に失敗 \(error)")
         }
