@@ -29,4 +29,15 @@ class FileManagerOperator {
     class func convertToDataFromUIImage(image: UIImage) -> Data? {
         return image.pngData()
     }
+    
+    class func remove(_ itemName: String) {
+        let fileManager = FileManager.default
+        var pathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        pathString = "file://" + pathString + "/" + "\(itemName)/"
+        guard let path = URL(string: pathString) else { return }
+        do {
+            try fileManager.removeItem(at: path)
+        } catch {
+        }
+    }
 }

@@ -15,6 +15,13 @@ struct QuizListView: View {
                         self.quizList = loadQuiz()
                     })) {
                         Text("\(quiz.title)")
+                        .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                handleClickDeleteButton(quiz: quiz)
+                            } label: {
+                                Image(systemName: "trash.fill")
+                            }
+                        }
                     }
                 }
             }
@@ -46,6 +53,18 @@ struct QuizListView: View {
         let quizModels = realm.objects(QuizModel.self)
         return quizModels.map {
             Quiz(quizModel: $0)
+        }
+    }
+    
+    func handleClickDeleteButton(quiz: Quiz) {
+        let quizObject = realm.objects(QuizModel.self).filter("directoryName == '\(quiz.directoryName)'")
+        do{
+            try realm.write{
+                realm.delete(quizObject)
+                FileManagerOperator.remove(quiz.directoryName)
+          }
+        }catch {
+          print("Error \(error)")
         }
     }
 }
