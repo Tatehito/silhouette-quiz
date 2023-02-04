@@ -15,16 +15,19 @@ struct QuizCreateView: View {
         VStack {
             Text("ここはクイズ登録画面です。")
             TextField("クイズのなまえをいれてください。", text: $quiz.title).keyboardType(.default)
-            Button("もんだいの写真を選択") {
-                handleClickSelectQuestionImageButton()
-            }
-            if let uiImage = questionUIImage {
-                Image(uiImage: uiImage).resizable().scaledToFit()
-            }
             Button("こたえの写真を選択") {
                 handleClickSelectAnswerImageButton()
             }
             if let uiImage = answerUIImage {
+                Image(uiImage: uiImage).resizable().scaledToFit()
+            }
+            Button("シルエット画像生成機能を使う") {
+                handleClickSilhouetteImageGenerateButton()
+            }
+            Button("もんだいの写真を選択") {
+                handleClickSelectQuestionImageButton()
+            }
+            if let uiImage = questionUIImage {
                 Image(uiImage: uiImage).resizable().scaledToFit()
             }
             Button("登録") {
@@ -48,6 +51,13 @@ struct QuizCreateView: View {
     
     private func handleClickSelectAnswerImageButton() {
         showingAnswerImagePicker = true
+    }
+    
+    private func handleClickSilhouetteImageGenerateButton() {
+        if answerUIImage == nil {
+            return
+        }
+        questionUIImage = answerUIImage?.silhouetteImageGenerate()
     }
     
     private func handleClickSubmitButton() {

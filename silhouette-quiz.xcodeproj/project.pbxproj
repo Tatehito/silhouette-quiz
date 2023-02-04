@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		650EA1BF298AA27C00F17CBB /* SilhouetteImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650EA1BE298AA27C00F17CBB /* SilhouetteImageGenerator.swift */; };
 		651F1A4A298943A90040059C /* FileManagerOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F1A49298943A90040059C /* FileManagerOperator.swift */; };
 		651F1A4C298949F30040059C /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F1A4B298949F30040059C /* QuizView.swift */; };
 		652BC9342985466500F697D0 /* QuizModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652BC9332985466500F697D0 /* QuizModel.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		650EA1BE298AA27C00F17CBB /* SilhouetteImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilhouetteImageGenerator.swift; sourceTree = "<group>"; };
 		651F1A49298943A90040059C /* FileManagerOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerOperator.swift; sourceTree = "<group>"; };
 		651F1A4B298949F30040059C /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
 		652BC9332985466500F697D0 /* QuizModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModel.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				656F4F5A2972C810009CC640 /* ImagePicker.swift */,
 				653C5160297BAD7B0000A66F /* SwiftUIPHPicker.swift */,
 				651F1A49298943A90040059C /* FileManagerOperator.swift */,
+				650EA1BE298AA27C00F17CBB /* SilhouetteImageGenerator.swift */,
 				656F26FD2973C24A00746D8C /* QuizListView.swift */,
 				656F26FF2973C40100746D8C /* QuizCreateView.swift */,
 				656F27032973CA6D00746D8C /* QuizEditView.swift */,
@@ -243,6 +246,7 @@
 				656F26FE2973C24A00746D8C /* QuizListView.swift in Sources */,
 				65931CC52972C6E70010936C /* ContentView.swift in Sources */,
 				651F1A4A298943A90040059C /* FileManagerOperator.swift in Sources */,
+				650EA1BF298AA27C00F17CBB /* SilhouetteImageGenerator.swift in Sources */,
 				654E4EEE2976DF800010033A /* u2net.mlmodel in Sources */,
 				651F1A4C298949F30040059C /* QuizView.swift in Sources */,
 				652BC9342985466500F697D0 /* QuizModel.swift in Sources */,
@@ -392,6 +396,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -434,6 +439,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";

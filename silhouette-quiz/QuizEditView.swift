@@ -17,23 +17,26 @@ struct QuizEditView: View {
         VStack {
             Text("ここはクイズ編集画面です。")
             TextField("クイズのなまえをいれてください。", text: $quiz.title).keyboardType(.default)
-            Text("もんだい")
-            if let uiImage = questionUIImage {
-                Image(uiImage: uiImage).resizable().scaledToFit()
-            } else {
-                Image(uiImage: quiz.questionImage).resizable().scaledToFit()
-            }
-            Button("もんだいの写真を選択") {
-                handleClickSelectQuestionImageButton()
-            }
             Text("こたえ")
+            Button("こたえの写真を選択") {
+                handleClickSelectAnswerImageButton()
+            }
             if let uiImage = answerUIImage {
                 Image(uiImage: uiImage).resizable().scaledToFit()
             } else {
                 Image(uiImage: quiz.answerImage).resizable().scaledToFit()
             }
-            Button("こたえの写真を選択") {
-                handleClickSelectAnswerImageButton()
+            Text("もんだい")
+            Button("シルエット画像生成機能を使う") {
+                handleClickSilhouetteImageGenerateButton()
+            }
+            Button("もんだいの写真を選択") {
+                handleClickSelectQuestionImageButton()
+            }
+            if let uiImage = questionUIImage {
+                Image(uiImage: uiImage).resizable().scaledToFit()
+            } else {
+                Image(uiImage: quiz.questionImage).resizable().scaledToFit()
             }
             Button("変更") {
                 // 入力チェック
@@ -79,5 +82,12 @@ struct QuizEditView: View {
     
     private func handleClickSelectAnswerImageButton() {
         showingAnswerImagePicker = true
+    }
+    
+    private func handleClickSilhouetteImageGenerateButton() {
+        if answerUIImage == nil {
+            return
+        }
+        questionUIImage = answerUIImage?.silhouetteImageGenerate()
     }
 }
