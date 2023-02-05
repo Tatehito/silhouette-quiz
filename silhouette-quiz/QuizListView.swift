@@ -29,18 +29,17 @@ struct QuizListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("クイズをつくる") {
-                        self.showingQuizCreateView.toggle()
-                    }
-                    .sheet(isPresented : $showingQuizCreateView, onDismiss : {
+                    NavigationLink(destination: QuizCreateView().onDisappear(perform: {
                         self.quizList = loadQuiz()
-                    }) {
-                       QuizCreateView()
+                    })) {
+                        Text("クイズをつくる")
                     }
                 }
                 ToolbarItem(placement: .bottomBar) {
-                    NavigationLink(destination: QuizView(quizList: quizList)) {
-                        Text("クイズをはじめる")
+                    if (quizList.endIndex > 0) {
+                        NavigationLink(destination: QuizView(quizList: quizList)) {
+                            Text("クイズをはじめる")
+                        }
                     }
                 }
             }
