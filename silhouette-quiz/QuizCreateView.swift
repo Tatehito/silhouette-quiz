@@ -13,28 +13,44 @@ struct QuizCreateView: View {
 
     var body: some View {
         VStack {
-            Text("ここはクイズ登録画面です。")
+            Text("クイズのなまえ")
+                .frame(maxWidth: .infinity, alignment: .leading)
             TextField("クイズのなまえをいれてください。", text: $quiz.title).keyboardType(.default)
-            Button("こたえの写真を選択") {
-                handleClickSelectAnswerImageButton()
-            }
+            HStack {
+                Text("こたえ")
+                Button("しゃしんをえらぶ") {
+                    handleClickSelectAnswerImageButton()
+                }
+            }.frame(maxWidth: .infinity, alignment: .leading)
             if let uiImage = answerUIImage {
-                Image(uiImage: uiImage).resizable().scaledToFit()
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+            }
+            HStack {
+                Text("もんだい")
+                Button("じぶんでしゃしんをえらぶ") {
+                    handleClickSelectQuestionImageButton()
+                }
+            }.frame(maxWidth: .infinity, alignment: .leading)
+            if let uiImage = questionUIImage {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
             }
             Button("シルエット画像生成機能を使う") {
                 handleClickSilhouetteImageGenerateButton()
             }
-            Button("もんだいの写真を選択") {
-                handleClickSelectQuestionImageButton()
-            }
-            if let uiImage = questionUIImage {
-                Image(uiImage: uiImage).resizable().scaledToFit()
-            }
-            Button("登録") {
+            Button(action: {
                 handleClickSubmitButton()
-            }
-            Button("キャンセル") {
-                handleClickCancelButton()
+            }) {
+                Text("ほぞんする")
+                    .bold()
+                    .padding()
+                    .frame(width: 200, height: 50)
+                    .foregroundColor(Color.white)
+                    .background(Color.blue)
+                    .cornerRadius(25)
             }
             
         }.sheet(isPresented: $showingQuestionImagePicker) {
@@ -93,10 +109,6 @@ struct QuizCreateView: View {
         quiz.directoryName = directoryName
         quiz.create()
 
-        dismiss()
-    }
-
-    private func handleClickCancelButton() {
         dismiss()
     }
 }
