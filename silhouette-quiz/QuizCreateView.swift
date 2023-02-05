@@ -5,9 +5,9 @@ struct QuizCreateView: View {
     @Environment(\.dismiss) var dismiss
     @State private var showingQuestionImagePicker = false
     @State private var showingAnswerImagePicker = false
-
-    @State private var questionUIImage: UIImage?
+    
     @State private var answerUIImage: UIImage?
+    @State private var questionUIImage: UIImage?
 
     @State private var quiz: QuizModel = QuizModel()
 
@@ -38,9 +38,6 @@ struct QuizCreateView: View {
                     .resizable()
                     .scaledToFit()
             }
-            Button("シルエット画像生成機能を使う") {
-                handleClickSilhouetteImageGenerateButton()
-            }
             Button(action: {
                 handleClickSubmitButton()
             }) {
@@ -58,6 +55,12 @@ struct QuizCreateView: View {
 
         }.sheet(isPresented: $showingAnswerImagePicker) {
             SwiftUIPicker(image: $answerUIImage)
+
+        }.onChange(of: answerUIImage) { newImage in
+            if answerUIImage == nil {
+                return
+            }
+            questionUIImage = answerUIImage?.silhouetteImageGenerate()
         }
     }
 
@@ -67,13 +70,6 @@ struct QuizCreateView: View {
     
     private func handleClickSelectAnswerImageButton() {
         showingAnswerImagePicker = true
-    }
-    
-    private func handleClickSilhouetteImageGenerateButton() {
-        if answerUIImage == nil {
-            return
-        }
-        questionUIImage = answerUIImage?.silhouetteImageGenerate()
     }
     
     private func handleClickSubmitButton() {
