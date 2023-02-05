@@ -31,4 +31,17 @@ extension UIImage {
             fatalError("シルエット画像の生成に失敗 \(error)")
         }
     }
+
+    func trimmingSquare() -> UIImage {
+        let imageW = self.size.width
+        let imageH = self.size.height
+        let targetSize = min( imageW, imageH)
+        let posX = (imageW - targetSize) / 2
+        let posY = (imageH - targetSize) / 2
+        let trimArea = CGRectMake(posX, posY, targetSize, targetSize)
+        
+        let imgRef = self.cgImage?.cropping(to: trimArea)
+        let trimImage = UIImage(cgImage: imgRef!, scale: self.scale, orientation: self.imageOrientation)
+        return trimImage
+    }
 }
