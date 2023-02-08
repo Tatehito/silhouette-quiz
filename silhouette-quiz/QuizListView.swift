@@ -25,22 +25,31 @@ struct QuizListView: View {
                     }
                 }
             }
-            .navigationTitle("クイズ一覧")
+            // 背景色変更 16.0 >= iOS
+            .scrollContentBackground(.hidden)
+            .background(Color.white)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("クイズをつくる") {
-                        self.showingQuizCreateView.toggle()
-                    }
-                    .sheet(isPresented : $showingQuizCreateView, onDismiss : {
+                    NavigationLink(destination: QuizCreateView().onDisappear(perform: {
                         self.quizList = loadQuiz()
-                    }) {
-                       QuizCreateView()
+                    })) {
+                        Text("クイズをつくる")
                     }
                 }
                 ToolbarItem(placement: .bottomBar) {
-                    NavigationLink(destination: QuizView(quizList: quizList)) {
-                        Text("クイズをはじめる")
+                    VStack {
+                        if (quizList.endIndex > 0) {
+                            NavigationLink(destination: QuizView(quizList: quizList)) {
+                                Text("クイズをはじめる")
+                                    .bold()
+                                    .padding()
+                                    .frame(width: 200, height: 50)
+                                    .foregroundColor(Color.white)
+                                    .background(Color.blue)
+                                    .cornerRadius(25)
+                            }
+                        }
                     }
                 }
             }

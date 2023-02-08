@@ -17,10 +17,9 @@ extension UIImage {
             try handler.perform([coreMLRequest])
             // 結果の取り出し
             let result = coreMLRequest.results?.first as! VNPixelBufferObservation
-            // UIImageに変換
-            let uiImage = UIImage(cgImage: convertCGImageFromPixelBuffer(from: result.pixelBuffer)!)
+            // CIImageに変換
+            let ciImage = CIImage(cvImageBuffer: result.pixelBuffer)
             // 色反転
-            let ciImage:CIImage = CIImage(image: uiImage)!
             let ciFilter:CIFilter = CIFilter(name: "CIColorInvert")!
             ciFilter.setValue(ciImage, forKey: kCIInputImageKey)
             let ciContext:CIContext = CIContext(options: nil)
@@ -32,10 +31,17 @@ extension UIImage {
             fatalError("シルエット画像の生成に失敗 \(error)")
         }
     }
-    
-    private func convertCGImageFromPixelBuffer(from pixelBuffer: CVPixelBuffer) -> CGImage? {
-       let ciContext = CIContext()
-       let ciImage = CIImage(cvImageBuffer: pixelBuffer)
-       return ciContext.createCGImage(ciImage, from: ciImage.extent)
+
+    func trimmingSquare() -> UIImage {
+        let imageW = self.size.width
+        let imageH = self.size.height
+        let targetSize = min( imageW, imageH)
+        let posX = (imageW - targetSize) / 2
+        let posY = (imageH - targetSize) / 2
+        let trimArea = CGRectMake(posX, posY, targetSize, targetSize)
+        
+        let imgRef = self.cgImage?.cropping(to: trimArea)
+        let trimImage = UIImage(cgImage: imgRef!, scale: self.scale, orientation: self.imageOrientation)
+        return trimImage
     }
 }

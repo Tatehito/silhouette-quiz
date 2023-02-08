@@ -5,44 +5,95 @@ struct QuizCreateView: View {
     @Environment(\.dismiss) var dismiss
     @State private var showingQuestionImagePicker = false
     @State private var showingAnswerImagePicker = false
-
-    @State private var questionUIImage: UIImage?
+    
     @State private var answerUIImage: UIImage?
+    @State private var questionUIImage: UIImage?
 
     @State private var quiz: QuizModel = QuizModel()
 
     var body: some View {
         VStack {
-            Text("ここはクイズ登録画面です。")
-            TextField("クイズのなまえをいれてください。", text: $quiz.title).keyboardType(.default)
-            Button("こたえの写真を選択") {
-                handleClickSelectAnswerImageButton()
-            }
-            if let uiImage = answerUIImage {
-                Image(uiImage: uiImage).resizable().scaledToFit()
-            }
-            Button("シルエット画像生成機能を使う") {
-                handleClickSilhouetteImageGenerateButton()
-            }
-            Button("もんだいの写真を選択") {
-                handleClickSelectQuestionImageButton()
-            }
-            if let uiImage = questionUIImage {
-                Image(uiImage: uiImage).resizable().scaledToFit()
-            }
-            Button("登録") {
+            Text("クイズのなまえ")
+                .frame(maxWidth: .infinity, alignment: .leading)
+            TextField("クイズのなまえをいれてください。", text: $quiz.title)
+                .keyboardType(.default)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            Spacer()
+
+            HStack {
+                Text("こたえ")
+                Button("しゃしんをえらぶ") {
+                    handleClickSelectAnswerImageButton()
+                }.frame(maxWidth: .infinity, alignment: .trailing)
+            }.frame(maxWidth: .infinity, alignment: .leading)
+            VStack {
+                if let uiImage = answerUIImage {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                }
+            }.frame(height: 200)
+
+            HStack {
+                Text("もんだい")
+                Button("しゃしんをえらぶ") {
+                    handleClickSelectQuestionImageButton()
+                }.frame(maxWidth: .infinity, alignment: .trailing)
+            }.frame(maxWidth: .infinity, alignment: .leading)
+            VStack {
+                if let uiImage = questionUIImage {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                }
+            }.frame(height: 200)
+            
+            Spacer()
+
+            Button(action: {
                 handleClickSubmitButton()
+            }){
+                Text("ほぞんする")
+                    .bold()
+                    .padding()
+                    .frame(width: 200, height: 50)
+                    .foregroundColor(Color.white)
+                    .background(Color.blue)
+                    .cornerRadius(25)
             }
-            Button("キャンセル") {
-                handleClickCancelButton()
-            }
+            // 上寄せにする
+            Spacer()
             
         }.sheet(isPresented: $showingQuestionImagePicker) {
             SwiftUIPicker(image: $questionUIImage)
 
         }.sheet(isPresented: $showingAnswerImagePicker) {
             SwiftUIPicker(image: $answerUIImage)
+
+        }.onChange(of: answerUIImage) { newImage in
+            if answerUIImage == nil {
+                return
+            }
+            questionUIImage = answerUIImage?.silhouetteImageGenerate()
         }
+        // navigationBarBackButtonのカスタマイズ
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                            .font(.system(size: 17, weight: .medium))
+                        Text("もどる")
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 30)
     }
 
     private func handleClickSelectQuestionImageButton() {
@@ -51,13 +102,6 @@ struct QuizCreateView: View {
     
     private func handleClickSelectAnswerImageButton() {
         showingAnswerImagePicker = true
-    }
-    
-    private func handleClickSilhouetteImageGenerateButton() {
-        if answerUIImage == nil {
-            return
-        }
-        questionUIImage = answerUIImage?.silhouetteImageGenerate()
     }
     
     private func handleClickSubmitButton() {
@@ -93,10 +137,6 @@ struct QuizCreateView: View {
         quiz.directoryName = directoryName
         quiz.create()
 
-        dismiss()
-    }
-
-    private func handleClickCancelButton() {
         dismiss()
     }
 }
