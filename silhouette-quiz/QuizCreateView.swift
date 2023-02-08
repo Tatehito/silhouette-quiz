@@ -15,32 +15,47 @@ struct QuizCreateView: View {
         VStack {
             Text("クイズのなまえ")
                 .frame(maxWidth: .infinity, alignment: .leading)
-            TextField("クイズのなまえをいれてください。", text: $quiz.title).keyboardType(.default)
+            TextField("クイズのなまえをいれてください。", text: $quiz.title)
+                .keyboardType(.default)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            Spacer()
+
             HStack {
                 Text("こたえ")
                 Button("しゃしんをえらぶ") {
                     handleClickSelectAnswerImageButton()
-                }
+                }.frame(maxWidth: .infinity, alignment: .trailing)
             }.frame(maxWidth: .infinity, alignment: .leading)
-            if let uiImage = answerUIImage {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
+            VStack {
+                if let uiImage = answerUIImage {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                }
             }
+                .frame(height: 200)
+
             HStack {
                 Text("もんだい")
-                Button("じぶんでしゃしんをえらぶ") {
+                Button("しゃしんをえらぶ") {
                     handleClickSelectQuestionImageButton()
-                }
+                }.frame(maxWidth: .infinity, alignment: .trailing)
             }.frame(maxWidth: .infinity, alignment: .leading)
-            if let uiImage = questionUIImage {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
+            VStack {
+                if let uiImage = questionUIImage {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                }
             }
+                .frame(height: 200)
+            
+            Spacer()
+
             Button(action: {
                 handleClickSubmitButton()
-            }) {
+            }){
                 Text("ほぞんする")
                     .bold()
                     .padding()
@@ -49,6 +64,8 @@ struct QuizCreateView: View {
                     .background(Color.blue)
                     .cornerRadius(25)
             }
+            // 上寄せにする
+            Spacer()
             
         }.sheet(isPresented: $showingQuestionImagePicker) {
             SwiftUIPicker(image: $questionUIImage)
@@ -62,6 +79,8 @@ struct QuizCreateView: View {
             }
             questionUIImage = answerUIImage?.silhouetteImageGenerate()
         }
+        .padding(.horizontal, 20)
+        .padding(.top, 30)
     }
 
     private func handleClickSelectQuestionImageButton() {
