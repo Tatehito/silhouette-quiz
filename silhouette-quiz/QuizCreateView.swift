@@ -33,8 +33,7 @@ struct QuizCreateView: View {
                         .resizable()
                         .scaledToFit()
                 }
-            }
-                .frame(height: 200)
+            }.frame(height: 200)
 
             HStack {
                 Text("もんだい")
@@ -48,8 +47,7 @@ struct QuizCreateView: View {
                         .resizable()
                         .scaledToFit()
                 }
-            }
-                .frame(height: 200)
+            }.frame(height: 200)
             
             Spacer()
 
