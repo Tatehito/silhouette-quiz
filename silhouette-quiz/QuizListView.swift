@@ -38,9 +38,17 @@ struct QuizListView: View {
                     }
                 }
                 ToolbarItem(placement: .bottomBar) {
-                    if (quizList.endIndex > 0) {
-                        NavigationLink(destination: QuizView(quizList: quizList)) {
-                            Text("クイズをはじめる")
+                    VStack {
+                        if (quizList.endIndex > 0) {
+                            NavigationLink(destination: QuizView(quizList: quizList)) {
+                                Text("クイズをはじめる")
+                                    .bold()
+                                    .padding()
+                                    .frame(width: 200, height: 50)
+                                    .foregroundColor(Color.white)
+                                    .background(Color.blue)
+                                    .cornerRadius(25)
+                            }
                         }
                     }
                 }
