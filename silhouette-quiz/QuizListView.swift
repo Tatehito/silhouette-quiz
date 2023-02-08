@@ -25,7 +25,9 @@ struct QuizListView: View {
                     }
                 }
             }
-            .navigationTitle("クイズ一覧")
+            // 背景色変更 16.0 >= iOS
+            .scrollContentBackground(.hidden)
+            .background(Color.white)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
