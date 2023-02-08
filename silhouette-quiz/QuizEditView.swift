@@ -79,6 +79,21 @@ struct QuizEditView: View {
             }
             questionUIImage = answerUIImage?.silhouetteImageGenerate()
         }
+        // navigationBarBackButtonのカスタマイズ
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                            .font(.system(size: 17, weight: .medium))
+                        Text("もどる")
+                    }
+                }
+            }
+        }
         .padding(.horizontal, 20)
         .padding(.top, 30)
     }
