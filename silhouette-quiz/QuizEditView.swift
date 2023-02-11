@@ -1,5 +1,6 @@
 import SwiftUI
 import RealmSwift
+import Combine
 
 struct QuizEditView: View {
     @Environment(\.dismiss) var dismiss
@@ -19,6 +20,11 @@ struct QuizEditView: View {
                 Text("クイズのなまえ")
                     .frame(maxWidth: .infinity, alignment: .leading)
                 TextField("クイズのなまえをいれてください。", text: $quiz.title)
+                    .onReceive(Just(quiz.title), perform: { _ in
+                        if Quiz.titleMaxLength < quiz.title.count {
+                            quiz.title = String(quiz.title.prefix(Quiz.titleMaxLength))
+                        }
+                    })
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
                 Spacer()
