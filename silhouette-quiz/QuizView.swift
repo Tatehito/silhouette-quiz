@@ -20,6 +20,7 @@ struct QuizView: View {
             if (isQuestionMode) {
                 Text("だーれだ？")
                     .font(.system(size: 30, weight: .black))
+                    .frame(height: 80)
                     .padding(.top, 20)
                     .padding(.bottom, 100)
                 Button(action: {
@@ -37,6 +38,7 @@ struct QuizView: View {
             } else {
                 Text(quizTitle!+"！")
                     .font(.system(size: 30, weight: .black))
+                    .frame(height: 80)
                     .padding(.top, 20)
                     .padding(.bottom, 100)
                 Button(action: {
