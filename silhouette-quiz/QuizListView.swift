@@ -67,12 +67,14 @@ struct QuizListView: View {
     
     func handleClickDeleteButton(quiz: Quiz) {
         let quizObject = realm.objects(QuizModel.self).filter("directoryName == '\(quiz.directoryName)'")
-        do{
-            try realm.write{
+        do {
+            try realm.write {
                 realm.delete(quizObject)
                 FileManagerOperator.remove(quiz.directoryName)
-          }
-        }catch {
+                // リフレッシュ
+                self.quizList = loadQuiz()
+            }
+        } catch {
           print("Error \(error)")
         }
     }
