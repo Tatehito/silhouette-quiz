@@ -6,6 +6,8 @@ struct Quiz: Identifiable {
     var questionImage: UIImage
     var answerImage: UIImage
     var directoryName: String
+    
+    static let titleMaxLength = 18
 
     init(quizModel: QuizModel) {
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]

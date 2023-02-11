@@ -1,5 +1,6 @@
 import SwiftUI
 import PhotosUI
+import Combine
 
 struct QuizCreateView: View {
     @Environment(\.dismiss) var dismiss
@@ -16,6 +17,11 @@ struct QuizCreateView: View {
                     Text("クイズのなまえ")
                         .frame(maxWidth: .infinity, alignment: .leading)
                     TextField("クイズのなまえをいれてください。", text: $quizTitle)
+                        .onReceive(Just(quizTitle), perform: { _ in
+                            if Quiz.titleMaxLength < quizTitle.count {
+                                quizTitle = String(quizTitle.prefix(Quiz.titleMaxLength))
+                            }
+                        })
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 
                     Spacer()
