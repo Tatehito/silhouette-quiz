@@ -6,17 +6,16 @@ struct QuizCreateView: View {
     @State private var showingQuestionImagePicker = false
     @State private var showingAnswerImagePicker = false
     
+    @State private var quizTitle: String = ""
     @State private var answerUIImage: UIImage?
     @State private var questionUIImage: UIImage?
-
-    @State private var quiz: QuizModel = QuizModel()
 
     var body: some View {
         GeometryReader { _ in
             VStack {
                     Text("クイズのなまえ")
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    TextField("クイズのなまえをいれてください。", text: $quiz.title)
+                    TextField("クイズのなまえをいれてください。", text: $quizTitle)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 
                     Spacer()
@@ -108,7 +107,7 @@ struct QuizCreateView: View {
     
     private func handleClickSubmitButton() {
         // TODO: 入力チェック
-        if quiz.title == "" || questionUIImage == nil || answerUIImage == nil {
+        if quizTitle == "" || questionUIImage == nil || answerUIImage == nil {
             return
         }
 
@@ -136,8 +135,10 @@ struct QuizCreateView: View {
         }
         
         // realmにクイズを保存
-        quiz.directoryName = directoryName
-        quiz.create()
+        let quizModel = QuizModel()
+        quizModel.title = quizTitle
+        quizModel.directoryName = directoryName
+        quizModel.create()
 
         dismiss()
     }
