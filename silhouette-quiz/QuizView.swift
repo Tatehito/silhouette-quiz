@@ -61,6 +61,7 @@ struct QuizView: View {
             self.displayImage = quizList[quizIndex].questionImage
             self.quizTitle = quizList[quizIndex].title
         }
+        .padding(.horizontal, 20)
     }
     
     func handleClickShowAnswerImage() {
