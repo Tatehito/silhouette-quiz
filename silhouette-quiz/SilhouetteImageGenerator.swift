@@ -23,8 +23,8 @@ extension UIImage {
             let ciFilter:CIFilter = CIFilter(name: "CIColorInvert")!
             ciFilter.setValue(ciImage, forKey: kCIInputImageKey)
             let ciContext:CIContext = CIContext(options: nil)
-            let cgimg:CGImage = ciContext.createCGImage(ciFilter.outputImage!, from:ciFilter.outputImage!.extent)!
-            let outputUIImage:UIImage? = UIImage(cgImage: cgimg, scale: 1.0, orientation:UIImage.Orientation.up)
+            let cgimg:CGImage = ciContext.createCGImage(ciFilter.outputImage!, from: ciFilter.outputImage!.extent)!
+            let outputUIImage:UIImage? = UIImage(cgImage: cgimg, scale: 1.0, orientation: self.imageOrientation)
             
             return outputUIImage
         } catch let error {
@@ -35,7 +35,7 @@ extension UIImage {
     func trimmingSquare() -> UIImage {
         let imageW = self.size.width
         let imageH = self.size.height
-        let targetSize = min( imageW, imageH)
+        let targetSize = min(imageW, imageH)
         let posX = (imageW - targetSize) / 2
         let posY = (imageH - targetSize) / 2
         let trimArea = CGRectMake(posX, posY, targetSize, targetSize)
