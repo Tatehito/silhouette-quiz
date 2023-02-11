@@ -33,15 +33,33 @@ extension UIImage {
     }
 
     func trimmingSquare() -> UIImage {
-        let imageW = self.size.width
-        let imageH = self.size.height
+        // 縦長の画像が正しく正方形に切り出せないことがあるためリサイズ処理を行う
+        // リサイズ処理をすると正しく動く理由は不明
+        let targetImage = resize(width: self.size.width)
+
+        let imageW = targetImage.size.width
+        let imageH = targetImage.size.height
         let targetSize = min(imageW, imageH)
         let posX = (imageW - targetSize) / 2
         let posY = (imageH - targetSize) / 2
         let trimArea = CGRectMake(posX, posY, targetSize, targetSize)
         
-        let imgRef = self.cgImage?.cropping(to: trimArea)
-        let trimImage = UIImage(cgImage: imgRef!, scale: self.scale, orientation: self.imageOrientation)
+        let imgRef = targetImage.cgImage?.cropping(to: trimArea)
+        let trimImage = UIImage(cgImage: imgRef!, scale: targetImage.scale, orientation: targetImage.imageOrientation)
         return trimImage
+    }
+    
+    func resize(width: Double) -> UIImage {
+        // オリジナル画像のサイズからアスペクト比を計算
+        let aspectScale = size.height / size.width
+        // widthからアスペクト比を元にリサイズ後のサイズを取得
+        let resizedSize = CGSize(width: width, height: width * Double(aspectScale))
+        // リサイズ後のUIImageを生成して返却
+        UIGraphicsBeginImageContext(resizedSize)
+        draw(in: CGRect(x: 0, y: 0, width: resizedSize.width, height: resizedSize.height))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return resizedImage!
     }
 }
