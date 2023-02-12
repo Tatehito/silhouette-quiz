@@ -34,26 +34,22 @@ struct QuizListView: View {
                         }
                     }
                 }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: QuizCreateView().onDisappear(perform: {
+                            self.quizList = loadQuiz()
+                        })) {
+                            Text("＋クイズをつくる")
+                        }
+                    }
+                }
                 // 背景色変更 16.0 >= iOS
                 .scrollContentBackground(.hidden)
                 .background(Color.white)
-                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitle("", displayMode: .inline)
                 .padding(.bottom, 130)
                 
                 VStack {
-                    NavigationLink(destination: QuizCreateView().onDisappear(perform: {
-                        self.quizList = loadQuiz()
-                    })) {
-                        Text("＋")
-                            .bold()
-                            .padding()
-                            .frame(width: 60, height: 60)
-                            .foregroundColor(Color.white)
-                            .background(Color.blue)
-                            .cornerRadius(30)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    }.padding(.bottom, 30)
-                    
                     if (quizList.endIndex > 0) {
                         VStack {
                             NavigationLink(destination: QuizView(isRandomMode: isRandomMode, quizList: quizList)) {
