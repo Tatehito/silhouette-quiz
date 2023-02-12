@@ -6,6 +6,7 @@ struct QuizCreateView: View {
     @Environment(\.dismiss) var dismiss
     @State private var showingQuestionImagePicker = false
     @State private var showingAnswerImagePicker = false
+    @FocusState var titleFocus: Bool
     
     @State private var quizTitle: String = ""
     @State private var answerUIImage: UIImage?
@@ -13,7 +14,15 @@ struct QuizCreateView: View {
 
     var body: some View {
         GeometryReader { _ in
-            VStack {
+            ZStack {
+                Color.white
+                    .opacity(1.0)
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        self.titleFocus = false
+                    }
+                
+                VStack {
                     Text("クイズのなまえ")
                         .frame(maxWidth: .infinity, alignment: .leading)
                     TextField("クイズのなまえをいれてください。", text: $quizTitle)
@@ -22,10 +31,11 @@ struct QuizCreateView: View {
                                 quizTitle = String(quizTitle.prefix(Quiz.titleMaxLength))
                             }
                         })
+                        .focused(self.$titleFocus)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                
+                    
                     Spacer()
-
+                    
                     HStack {
                         Text("こたえ")
                         Button("しゃしんをえらぶ") {
@@ -38,8 +48,10 @@ struct QuizCreateView: View {
                                 .resizable()
                                 .scaledToFit()
                         }
+                    }.onTapGesture {
+                        self.titleFocus = false
                     }.frame(height: 200)
-
+                    
                     HStack {
                         Text("もんだい")
                         Button("しゃしんをえらぶ") {
@@ -52,10 +64,12 @@ struct QuizCreateView: View {
                                 .resizable()
                                 .scaledToFit()
                         }
+                    }.onTapGesture {
+                        self.titleFocus = false
                     }.frame(height: 200)
                     
                     Spacer()
-
+                    
                     Button(action: {
                         handleClickSubmitButton()
                     }){
@@ -69,45 +83,48 @@ struct QuizCreateView: View {
                     }
                     // 上寄せにする
                     Spacer()
-                
-            }.sheet(isPresented: $showingQuestionImagePicker) {
-                SwiftUIPicker(image: $questionUIImage)
-
-            }.sheet(isPresented: $showingAnswerImagePicker) {
-                SwiftUIPicker(image: $answerUIImage)
-
-            }.onChange(of: answerUIImage) { newImage in
-                if answerUIImage == nil {
-                    return
+                    
+                }.sheet(isPresented: $showingQuestionImagePicker) {
+                    SwiftUIPicker(image: $questionUIImage)
+                    
+                }.sheet(isPresented: $showingAnswerImagePicker) {
+                    SwiftUIPicker(image: $answerUIImage)
+                    
+                }.onChange(of: answerUIImage) { newImage in
+                    if answerUIImage == nil {
+                        return
+                    }
+                    questionUIImage = answerUIImage?.silhouetteImageGenerate()
                 }
-                questionUIImage = answerUIImage?.silhouetteImageGenerate()
-            }
-            // navigationBarBackButtonのカスタマイズ
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        HStack {
-                            Image(systemName: "chevron.backward")
-                                .font(.system(size: 17, weight: .medium))
-                            Text("もどる")
+                // navigationBarBackButtonのカスタマイズ
+                .navigationBarBackButtonHidden(true)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            HStack {
+                                Image(systemName: "chevron.backward")
+                                    .font(.system(size: 17, weight: .medium))
+                                Text("もどる")
+                            }
                         }
                     }
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 30)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 30)
         // キーボード表示時に全体が上に迫り上がるのを防止する
         }.ignoresSafeArea(.keyboard, edges: .bottom)
     }
 
     private func handleClickSelectQuestionImageButton() {
+        self.titleFocus = false
         showingQuestionImagePicker = true
     }
     
     private func handleClickSelectAnswerImageButton() {
+        self.titleFocus = false
         showingAnswerImagePicker = true
     }
     
