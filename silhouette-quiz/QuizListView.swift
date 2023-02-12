@@ -73,10 +73,11 @@ struct QuizListView: View {
     }
     
     func loadQuiz() -> [Quiz] {
+        // 登録順の降順で表示する
         let quizModels = realm.objects(QuizModel.self)
         return quizModels.map {
             Quiz(quizModel: $0)
-        }
+        }.reversed()
     }
     
     func handleClickDeleteButton(quiz: Quiz) {
