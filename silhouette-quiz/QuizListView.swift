@@ -3,6 +3,7 @@ import RealmSwift
 
 struct QuizListView: View {
     @State private var showingQuizCreateView = false
+    @State private var randomMode = false
     @State private var quizList: [Quiz] = []
 
     let realm = try! Realm()
@@ -37,7 +38,7 @@ struct QuizListView: View {
                 .scrollContentBackground(.hidden)
                 .background(Color.white)
                 .navigationBarTitleDisplayMode(.inline)
-                .padding(.bottom, 100)
+                .padding(.bottom, 130)
                 
                 VStack {
                     NavigationLink(destination: QuizCreateView().onDisappear(perform: {
@@ -54,17 +55,22 @@ struct QuizListView: View {
                     }.padding(.bottom, 30)
                     
                     if (quizList.endIndex > 0) {
-                        NavigationLink(destination: QuizView(quizList: quizList)) {
-                            Text("クイズをはじめる")
-                                .bold()
-                                .padding()
-                                .frame(width: 200, height: 50)
-                                .foregroundColor(Color.white)
-                                .background(Color.blue)
-                                .cornerRadius(25)
+                        VStack {
+                            NavigationLink(destination: QuizView(quizList: quizList)) {
+                                Text("クイズをはじめる")
+                                    .bold()
+                                    .padding()
+                                    .frame(width: 180, height: 50)
+                                    .foregroundColor(Color.white)
+                                    .background(Color.blue)
+                                    .cornerRadius(25)
+                            }
+                            .padding(.bottom, 5)
+                            Toggle("ランダム", isOn: $randomMode)
+                                .frame(width: 125)
                         }
                     }
-                }.padding(.horizontal, 30).padding(.bottom, 30)
+                }.padding(.horizontal, 30).padding(.bottom, 10)
                     
             }.onAppear {
                 self.quizList = loadQuiz()
