@@ -19,38 +19,28 @@ struct QuizView: View {
                     .resizable()
                     .scaledToFit()
             }
+            
+            
             if (isQuestionMode) {
                 Text("だーれだ？")
                     .font(.system(size: 30, weight: .black))
                     .frame(height: 80)
                     .padding(.top, 20)
                     .padding(.bottom, 100)
-                Button(action: {
-                    handleClickShowAnswerImage()
-                }){
-                    Text("こたえをみる")
-                        .bold()
-                        .padding()
-                        .frame(width: 200, height: 50)
-                        .foregroundColor(Color.white)
-                        .background(Color.blue)
-                        .cornerRadius(25)
-                }
-                .padding(.bottom, 20)
             } else {
                 Text(quizTitle!+"！")
                     .font(.system(size: 30, weight: .black))
                     .frame(height: 80)
                     .padding(.top, 20)
                     .padding(.bottom, 100)
-                
-                if (isFinished) {
-                    Text("おしまい！")
-                } else {
+            }
+
+            VStack {
+                if (isQuestionMode) {
                     Button(action: {
-                        handleClickNextQuestion()
+                        handleClickShowAnswerImage()
                     }){
-                        Text("つぎのもんだい")
+                        Text("こたえをみる")
                             .bold()
                             .padding()
                             .frame(width: 200, height: 50)
@@ -58,9 +48,23 @@ struct QuizView: View {
                             .background(Color.blue)
                             .cornerRadius(25)
                     }
-                    .padding(.bottom, 20)
+                } else {
+                    if (!isFinished) {
+                        Button(action: {
+                            handleClickNextQuestion()
+                        }){
+                            Text("つぎのもんだい")
+                                .bold()
+                                .padding()
+                                .frame(width: 200, height: 50)
+                                .foregroundColor(Color.white)
+                                .background(Color.blue)
+                                .cornerRadius(25)
+                        }
+                    }
                 }
-            }
+            }.frame(height: 100)
+
             Button("クイズをおわる") {
                 dismiss()
             }
