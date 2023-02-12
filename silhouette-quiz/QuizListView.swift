@@ -3,6 +3,7 @@ import RealmSwift
 
 struct QuizListView: View {
     @State private var showingQuizCreateView = false
+    @State private var isRandomMode = false
     @State private var quizList: [Quiz] = []
 
     let realm = try! Realm()
@@ -33,38 +34,39 @@ struct QuizListView: View {
                         }
                     }
                 }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: QuizCreateView().onDisappear(perform: {
+                            self.quizList = loadQuiz()
+                        })) {
+                            Text("＋クイズをつくる")
+                        }
+                    }
+                }
                 // 背景色変更 16.0 >= iOS
                 .scrollContentBackground(.hidden)
                 .background(Color.white)
-                .navigationBarTitleDisplayMode(.inline)
-                .padding(.bottom, 100)
+                .navigationBarTitle("", displayMode: .inline)
+                .padding(.bottom, 130)
                 
                 VStack {
-                    NavigationLink(destination: QuizCreateView().onDisappear(perform: {
-                        self.quizList = loadQuiz()
-                    })) {
-                        Text("＋")
-                            .bold()
-                            .padding()
-                            .frame(width: 60, height: 60)
-                            .foregroundColor(Color.white)
-                            .background(Color.blue)
-                            .cornerRadius(30)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    }.padding(.bottom, 30)
-                    
                     if (quizList.endIndex > 0) {
-                        NavigationLink(destination: QuizView(quizList: quizList)) {
-                            Text("クイズをはじめる")
-                                .bold()
-                                .padding()
-                                .frame(width: 200, height: 50)
-                                .foregroundColor(Color.white)
-                                .background(Color.blue)
-                                .cornerRadius(25)
+                        VStack {
+                            NavigationLink(destination: QuizView(isRandomMode: isRandomMode, quizList: quizList)) {
+                                Text("クイズをはじめる")
+                                    .bold()
+                                    .padding()
+                                    .frame(width: 180, height: 50)
+                                    .foregroundColor(Color.white)
+                                    .background(Color.blue)
+                                    .cornerRadius(25)
+                            }
+                            .padding(.bottom, 5)
+                            Toggle("ランダム", isOn: $isRandomMode)
+                                .frame(width: 125)
                         }
                     }
-                }.padding(.horizontal, 30).padding(.bottom, 30)
+                }.padding(.horizontal, 30).padding(.bottom, 10)
                     
             }.onAppear {
                 self.quizList = loadQuiz()
