@@ -4,7 +4,8 @@ import RealmSwift
 struct QuizView: View {
     @Environment(\.dismiss) var dismiss
     
-    var quizList: [Quiz]
+    let isRandomMode: Bool
+    @State var quizList: [Quiz]
     @State private var quizIndex: Int = 0
     @State private var quizTitle: String?
     @State private var displayImage: UIImage?
@@ -60,6 +61,9 @@ struct QuizView: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
+            if (isRandomMode) {
+                self.quizList = quizList.shuffled()
+            }
             self.displayImage = quizList[quizIndex].questionImage
             self.quizTitle = quizList[quizIndex].title
         }

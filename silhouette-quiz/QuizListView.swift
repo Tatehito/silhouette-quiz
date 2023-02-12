@@ -3,7 +3,7 @@ import RealmSwift
 
 struct QuizListView: View {
     @State private var showingQuizCreateView = false
-    @State private var randomMode = false
+    @State private var isRandomMode = false
     @State private var quizList: [Quiz] = []
 
     let realm = try! Realm()
@@ -56,7 +56,7 @@ struct QuizListView: View {
                     
                     if (quizList.endIndex > 0) {
                         VStack {
-                            NavigationLink(destination: QuizView(quizList: quizList)) {
+                            NavigationLink(destination: QuizView(isRandomMode: isRandomMode, quizList: quizList)) {
                                 Text("クイズをはじめる")
                                     .bold()
                                     .padding()
@@ -66,7 +66,7 @@ struct QuizListView: View {
                                     .cornerRadius(25)
                             }
                             .padding(.bottom, 5)
-                            Toggle("ランダム", isOn: $randomMode)
+                            Toggle("ランダム", isOn: $isRandomMode)
                                 .frame(width: 125)
                         }
                     }
