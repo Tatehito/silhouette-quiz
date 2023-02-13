@@ -19,17 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             // 初回起動時
             createSampleQuiz(
-                title: "月",
+                title: "ぶどう",
                 questionUIImage: UIImage(named: "sampleImage1/question")!,
                 answerUIImage: UIImage(named: "sampleImage1/answer")!
             )
             createSampleQuiz(
-                title: "太陽",
+                title: "ねこちゃん",
                 questionUIImage: UIImage(named: "sampleImage2/question")!,
                 answerUIImage: UIImage(named: "sampleImage2/answer")!
             )
             createSampleQuiz(
-                title: "草原",
+                title: "パパとママ",
                 questionUIImage: UIImage(named: "sampleImage3/question")!,
                 answerUIImage: UIImage(named: "sampleImage3/answer")!
             )
