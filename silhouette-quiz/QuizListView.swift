@@ -34,6 +34,7 @@ struct QuizListView: View {
                         }
                     }
                 }
+                .toolbarBackground(.white, for: .navigationBar)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink(destination: QuizCreateView().onDisappear(perform: {
@@ -45,8 +46,6 @@ struct QuizListView: View {
                 }
                 // 背景色変更 16.0 >= iOS
                 .scrollContentBackground(.hidden)
-                .background(Color.white)
-                .navigationBarTitle("", displayMode: .inline)
                 .padding(.bottom, 130)
                 
                 VStack {
@@ -66,7 +65,8 @@ struct QuizListView: View {
                                 .frame(width: 125)
                         }
                     }
-                }.padding(.horizontal, 30).padding(.bottom, 10)
+                }
+                .padding(.horizontal, 30).padding(.bottom, 10)
                     
             }.onAppear {
                 self.quizList = loadQuiz()

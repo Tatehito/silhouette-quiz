@@ -26,13 +26,13 @@ struct QuizView: View {
                     .font(.system(size: 30, weight: .black))
                     .frame(height: 80)
                     .padding(.top, 20)
-                    .padding(.bottom, 100)
+                    .padding(.bottom, 70)
             } else {
                 Text(quizTitle!+"！")
                     .font(.system(size: 30, weight: .black))
                     .frame(height: 80)
                     .padding(.top, 20)
-                    .padding(.bottom, 100)
+                    .padding(.bottom, 70)
             }
 
             VStack {
@@ -63,11 +63,22 @@ struct QuizView: View {
                         }
                     }
                 }
-            }.frame(height: 100)
+            }
+            .frame(height: 80)
+
+            VStack {
+                if (!isQuestionMode) {
+                    Button("もんだいにもどる") {
+                        handleClickBackQuestion()
+                    }
+                }
+            }
+            .frame(height: 30)
 
             Button("クイズをおわる") {
                 dismiss()
             }
+            .frame(height: 30)
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
@@ -93,6 +104,11 @@ struct QuizView: View {
         quizIndex = quizIndex + 1
         displayImage = quizList[quizIndex].questionImage
         quizTitle = quizList[quizIndex].title
+        isQuestionMode.toggle()
+    }
+    
+    func handleClickBackQuestion() {
+        displayImage = quizList[quizIndex].questionImage
         isQuestionMode.toggle()
     }
 }
