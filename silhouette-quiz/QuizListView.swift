@@ -72,6 +72,8 @@ struct QuizListView: View {
                 self.quizList = loadQuiz()
             }
         }
+        // iPadでも同じ表示にする
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     func loadQuiz() -> [Quiz] {

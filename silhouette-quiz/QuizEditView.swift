@@ -36,8 +36,7 @@ struct QuizEditView: View {
                         })
                         .focused(self.$titleFocus)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    Spacer()
+                        .padding(.bottom, 20)
                     
                     HStack {
                         Text("こたえ")
@@ -53,7 +52,7 @@ struct QuizEditView: View {
                         }
                     }.onTapGesture {
                         self.titleFocus = false
-                    }.frame(height: 200)
+                    }.frame(height: 170)
                     
                     HStack {
                         Text("もんだい")
@@ -69,7 +68,7 @@ struct QuizEditView: View {
                         }
                     }.onTapGesture {
                         self.titleFocus = false
-                    }.frame(height: 200)
+                    }.frame(height: 170)
                     
                     Spacer()
                     
