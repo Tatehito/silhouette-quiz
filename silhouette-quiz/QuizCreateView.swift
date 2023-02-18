@@ -41,54 +41,55 @@ struct QuizCreateView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom, 10)
                     
-                    if ((answerUIImage != nil) && (questionUIImage != nil)) {
-                        HStack(alignment: .top) {
-                            Text("こたえ")
-                                .frame(width: 70, alignment: .leading)
-                            Spacer()
-                            Image(uiImage: answerUIImage!)
-                                .resizable()
-                                .scaledToFit()
-                            Spacer()
-                        }.onTapGesture {
-                            self.titleFocus = false
-                        }.frame(height: 170)
-                        
-                        HStack(alignment: .top) {
-                            Text("もんだい")
-                                .frame(width: 70, alignment: .leading)
-                            Spacer()
-                            Image(uiImage: questionUIImage!)
-                                .resizable()
-                                .scaledToFit()
-                            Spacer()
-                        }.onTapGesture {
-                            self.titleFocus = false
-                        }.frame(height: 170)
-                        
+                    if (loading) {
+                        Text("シルエットをつくっています...")
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     } else {
-                        if (loading) {
-                            Text("シルエットをつくっています...")
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                        if ((answerUIImage != nil) && (questionUIImage != nil)) {
+                            HStack(alignment: .top) {
+                                Text("こたえ")
+                                    .frame(width: 70, alignment: .leading)
+                                Spacer()
+                                Image(uiImage: answerUIImage!)
+                                    .resizable()
+                                    .scaledToFit()
+                                Spacer()
+                            }.onTapGesture {
+                                self.titleFocus = false
+                            }.frame(height: 170)
+                            
+                            HStack(alignment: .top) {
+                                Text("もんだい")
+                                    .frame(width: 70, alignment: .leading)
+                                Spacer()
+                                Image(uiImage: questionUIImage!)
+                                    .resizable()
+                                    .scaledToFit()
+                                Spacer()
+                            }.onTapGesture {
+                                self.titleFocus = false
+                            }.frame(height: 170)
+                            
+                        } else {
                         }
-                    }
 
-                    VStack {
-                        Button(action: {
-                            handleClickSubmitButton()
-                        }){
-                            Text("ほぞんする")
-                                .bold()
-                                .padding()
-                                .frame(width: 200, height: 50)
-                                .foregroundColor(Color.white)
-                                .background(Color.blue)
-                                .cornerRadius(25)
+                        VStack {
+                            Button(action: {
+                                handleClickSubmitButton()
+                            }){
+                                Text("ほぞんする")
+                                    .bold()
+                                    .padding()
+                                    .frame(width: 200, height: 50)
+                                    .foregroundColor(Color.white)
+                                    .background(Color.blue)
+                                    .cornerRadius(25)
+                            }
                         }
+                        .frame(maxHeight: .infinity, alignment: .bottom)
+                        .padding(.bottom, 10)
                     }
-                    .frame(maxHeight: .infinity, alignment: .bottom)
-                    .padding(.bottom, 10)
-
+                    
                     // 上寄せにする
                     Spacer()
                     

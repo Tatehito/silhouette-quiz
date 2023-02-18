@@ -24,6 +24,7 @@ struct SwiftUIPicker: UIViewControllerRepresentable{
                 provider.loadObject(ofClass: UIImage.self) { image, _ in
                     let uiImage = image as? UIImage
                     self.parent.image = uiImage?.trimmingSquare()
+                    self.parent.loading = false
                 }
             }
         }
