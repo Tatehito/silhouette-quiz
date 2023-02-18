@@ -4,6 +4,7 @@ import PhotosUI
 struct SwiftUIPicker: UIViewControllerRepresentable{
     //SwiftUIと繋がるBindingオブジェクト
     @Binding var image: UIImage?
+    @Binding var loading: Bool
     
     //Coordinatorでdelegateメソッドを処理してUIKit側の処理をさせる
     class Coordinator: NSObject, PHPickerViewControllerDelegate{
@@ -14,6 +15,7 @@ struct SwiftUIPicker: UIViewControllerRepresentable{
         }
         
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+            self.parent.loading = true
             picker.dismiss(animated: true)
             
             guard let provider = results.first?.itemProvider else {return}
