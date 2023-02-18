@@ -4,8 +4,8 @@ import Combine
 
 struct QuizEditView: View {
     @Environment(\.dismiss) var dismiss
-    @State private var showingQuestionImagePicker = false
     @State private var showingAnswerImagePicker = false
+    @State private var loading = false
     @FocusState var titleFocus: Bool
     
     @State private var questionUIImage: UIImage?
@@ -36,61 +36,68 @@ struct QuizEditView: View {
                         })
                         .focused(self.$titleFocus)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 10)
                     
-                    HStack {
-                        Text("こたえ")
-                        Button("しゃしんをえらぶ") {
-                            handleClickSelectAnswerImageButton()
-                        }.frame(maxWidth: .infinity, alignment: .trailing)
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-                    VStack {
-                        if let uiImage = answerUIImage {
-                            Image(uiImage: uiImage).resizable().scaledToFit()
-                        } else {
-                            Image(uiImage: quiz.answerImage).resizable().scaledToFit()
-                        }
-                    }.onTapGesture {
-                        self.titleFocus = false
-                    }.frame(height: 170)
-                    
-                    HStack {
-                        Text("もんだい")
-                        Button("しゃしんをえらぶ") {
-                            handleClickSelectQuestionImageButton()
-                        }.frame(maxWidth: .infinity, alignment: .trailing)
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-                    VStack {
-                        if let uiImage = questionUIImage {
-                            Image(uiImage: uiImage).resizable().scaledToFit()
-                        } else {
-                            Image(uiImage: quiz.questionImage).resizable().scaledToFit()
-                        }
-                    }.onTapGesture {
-                        self.titleFocus = false
-                    }.frame(height: 170)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        handleClickSubmitButton()
-                    }){
-                        Text("ほぞんする")
-                            .bold()
-                            .padding()
-                            .frame(width: 200, height: 50)
-                            .foregroundColor(Color.white)
-                            .background(Color.blue)
-                            .cornerRadius(25)
+                    Button("しゃしんをえらぶ") {
+                        handleClickSelectAnswerImageButton()
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom, 10)
+                    
+                    if (loading) {
+                        Text("シルエットをつくっています...")
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    } else {
+                        HStack(alignment: .top) {
+                            Text("こたえ")
+                                .frame(width: 70, alignment: .leading)
+                            Spacer()
+                            if let uiImage = answerUIImage {
+                                Image(uiImage: uiImage).resizable().scaledToFit()
+                            } else {
+                                Image(uiImage: quiz.answerImage).resizable().scaledToFit()
+                            }
+                            Spacer()
+                        }.onTapGesture {
+                            self.titleFocus = false
+                        }.frame(height: 170)
+
+                        HStack(alignment: .top) {
+                            Text("もんだい")
+                                .frame(width: 70, alignment: .leading)
+                            Spacer()
+                            if let uiImage = questionUIImage {
+                                Image(uiImage: uiImage).resizable().scaledToFit()
+                            } else {
+                                Image(uiImage: quiz.questionImage).resizable().scaledToFit()
+                            }
+                            Spacer()
+                        }.onTapGesture {
+                            self.titleFocus = false
+                        }.frame(height: 170)
+                    }
+
+                    VStack {
+                        Button(action: {
+                            handleClickSubmitButton()
+                        }){
+                            Text("ほぞんする")
+                                .bold()
+                                .padding()
+                                .frame(width: 200, height: 50)
+                                .foregroundColor(Color.white)
+                                .background(Color.blue)
+                                .cornerRadius(25)
+                        }
+                    }
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                    .padding(.bottom, 10)
+                    
                     // 上寄せにする
                     Spacer()
                     
-                }.sheet(isPresented: $showingQuestionImagePicker) {
-                    SwiftUIPicker(image: $questionUIImage)
-                    
                 }.sheet(isPresented: $showingAnswerImagePicker) {
-                    SwiftUIPicker(image: $answerUIImage)
+                    SwiftUIPicker(image: $answerUIImage, loading: $loading)
                     
                 }.onChange(of: answerUIImage) { newImage in
                     if answerUIImage == nil {
@@ -118,11 +125,6 @@ struct QuizEditView: View {
             }
         // キーボード表示時に全体が上に迫り上がるのを防止する
         }.ignoresSafeArea(.keyboard, edges: .bottom)
-    }
-    
-    private func handleClickSelectQuestionImageButton() {
-        self.titleFocus = false
-        showingQuestionImagePicker = true
     }
     
     private func handleClickSelectAnswerImageButton() {
