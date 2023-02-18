@@ -43,6 +43,11 @@ struct QuizListView: View {
                             Text("＋クイズをつくる")
                         }
                     }
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        if let url = URL(string: "https://debonair-lunch-5a6.notion.site/1196ffd3299d42578a00a99303713f25") {
+                            Link("遊び方", destination: url)
+                        }
+                    }
                 }
                 // 背景色変更 16.0 >= iOS
                 .scrollContentBackground(.hidden)
