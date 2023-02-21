@@ -69,7 +69,7 @@ struct QuizListView: View {
                             }
                             .padding(.bottom, 5)
                             Toggle("ランダム", isOn: $isRandomMode)
-                                .frame(width: 125)
+                                .frame(width: 130)
                         }
                     }
                 }
