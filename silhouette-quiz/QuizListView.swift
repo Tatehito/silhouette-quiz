@@ -44,8 +44,10 @@ struct QuizListView: View {
                         }
                     }
                     ToolbarItem(placement: .navigationBarLeading) {
-                        if let url = URL(string: "https://debonair-lunch-5a6.notion.site/1196ffd3299d42578a00a99303713f25") {
-                            Link("遊び方", destination: url)
+                        Button("遊び方") {
+                            guard let url = URL(string: "https://debonair-lunch-5a6.notion.site/1196ffd3299d42578a00a99303713f25")
+                            else { fatalError("Expected a valid URL") }
+                            UIApplication.shared.open(url)
                         }
                     }
                 }
