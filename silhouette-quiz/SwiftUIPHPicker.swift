@@ -15,11 +15,11 @@ struct SwiftUIPicker: UIViewControllerRepresentable{
         }
         
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-            self.parent.loading = true
             picker.dismiss(animated: true)
-            
-            guard let provider = results.first?.itemProvider else {return}
-            
+            guard let provider = results.first?.itemProvider else {
+                return
+            }
+            self.parent.loading = true
             if provider.canLoadObject(ofClass: UIImage.self){
                 provider.loadObject(ofClass: UIImage.self) { image, _ in
                     let uiImage = image as? UIImage
